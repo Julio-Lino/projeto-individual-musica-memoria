@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>TrilhaSonora</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="icon" type="image/png" href="./assets/logo.svg">
 </head>
 
 <body>
@@ -33,7 +35,6 @@
             <a href="#destaque" class="btn o">Explorar o fórum</a>
         </div>
 
-        <!-- os chips são preenchidos pelo JavaScript lá embaixo -->
         <div class="chips" id="chips"></div>
     </section>
 
@@ -56,11 +57,7 @@
         <section class="feat-wrap" id="destaque">
             <p class="label">Em destaque</p>
             <div class="panel feat">
-                <!--
-                    Lado esquerdo do destaque:
-                    1) a primeira div é o fundo: a mesma foto, borrada e escurecida (preenche tudo)
-                    2) a segunda div fica por cima: a foto inteira, sem zoom, com o nome da música e o artista
-                -->
+
                 <div class="l" style="position: relative; overflow: hidden; padding: 0; min-height: 280px; background: #000">
                     <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: url('./assets/less_than_zero.jpeg'); background-size: cover; background-position: center; filter: blur(30px) brightness(0.5); transform: scale(1.3)"></div>
 
@@ -91,14 +88,12 @@
             <a href="#">Mostrar tudo</a>
         </div>
 
-        <!-- os cards são preenchidos pelo JavaScript -->
         <div class="cards" id="cards"></div>
 
         <section class="sec" id="sentimentos">
             <h2>Navegue por sentimento</h2>
             <p class="sub">Cada memória publicada entra em uma dessas prateleiras.</p>
 
-            <!-- as prateleiras de sentimento são preenchidas pelo JavaScript -->
             <div class="moods" id="moods"></div>
 
             <div class="panel rank">
@@ -155,7 +150,6 @@
         <section class="sec narrow">
             <h2>Perguntas frequentes</h2>
 
-            <!-- as perguntas são preenchidas pelo JavaScript -->
             <div class="faq" id="faq"></div>
         </section>
 
@@ -179,22 +173,17 @@
 </body>
 
 <script>
-    // ---------- ÍCONES (desenho da nota musical) ----------
-    // um pequeno e um grande, para não precisar trocar o tamanho depois
+
     let notaPequena = '<svg viewBox="0 0 24 24" class="ico" width="32" height="32"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
     let notaGrande = '<svg viewBox="0 0 24 24" class="ico" width="84" height="84"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
     let iconeMais = '<svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
 
-    // ---------- DADOS DAS HISTÓRIAS (cada posição é uma história) ----------
     let titulos = ['Esperando Na Janela', 'Snowman', 'Exagero', 'Me Libera', 'I Gotta Feeling', 'Less Than Zero'];
     let artistas = ['Cogumelo Plutão', 'Sia', 'Sofi Frozza', 'Banda Djavú', 'Black Eyed Paes', 'The Weeknd'];
     let sentimentosHistoria = ['Esperança', 'Saudade', 'Amor', 'Nostalgia', 'Alegria', 'Conforto'];
     let usuarios = ['Débora Vicente', 'Vampira', 'Cata Condez', 'Raphael Lino', 'Eduarda Vicente', 'Julio Lino'];
     let datas = ['há 10 d', 'há 10 d', 'há 7 d', 'há 11 d', 'há 12 d', 'há 1 d'];
 
-    // caminho da foto da capa de cada álbum (mesma ordem dos títulos)
-    // as imagens ficam na pasta "assets" ao lado do home.html
-    // se quiser deixar uma música sem capa, coloque '' (aí volta a cor / a notinha)
     let capas = [
         './assets/esperando_na_janela.jpeg',
         './assets/snowman.jpeg',
@@ -204,7 +193,6 @@
         './assets/less_than_zero.jpeg'
     ];
 
-    // a cor segue o sentimento de cada história (mesma ordem de sentimentosHistoria)
     let coresHistoria = [
         'var(--c-esperanca)',
         'var(--c-saudade)',
@@ -214,7 +202,6 @@
         'var(--c-conforto)'
     ];
 
-    // ---------- DADOS DOS SENTIMENTOS ----------
     let nomesSentimentos = ['Saudade', 'Alegria', 'Amor', 'Esperança', 'Nostalgia', 'Conforto', 'Tristeza', 'Energia'];
     let coresSentimentos = [
         'var(--c-saudade)',
@@ -227,10 +214,8 @@
         'var(--c-energia)'
     ];
 
-    // ---------- DADOS DOS ARTISTAS (a cor é a mesma da história, na mesma ordem) ----------
     let nomesArtistas = ['Cogumelo Plutão', 'Sia', 'Sofi Frozza', 'Banda Djavú', 'Black Eyed Paes', 'The Weeknd'];
 
-    // ---------- DADOS DAS PERGUNTAS FREQUENTES ----------
     let perguntas = [
         'O que é o TrilhaSonora?',
         'Quem pode publicar uma história?',
@@ -244,9 +229,6 @@
         'Na tela de entrada, use a opção de recuperar senha. Enviaremos um link para o seu e-mail para você criar uma nova.'
     ];
 
-    // ---------- MONTANDO A TELA ----------
-
-    // chips do topo (um por história)
     for (let i = 0; i < titulos.length; i++) {
         // começa com a notinha; se tiver foto de capa, troca pela foto
         let icone = notaPequena;
@@ -265,10 +247,7 @@
             </a>`;
     }
 
-    // cards "Histórias que tocaram a comunidade"
     for (let i = 0; i < titulos.length; i++) {
-        // começa só com a cor; se tiver capa, põe a foto com um escurecido por cima
-        // (o escurecido ajuda a ler o nome do sentimento em cima da foto)
         let fundo = `background: ${coresHistoria[i]}`;
 
         if (capas[i] !== '') {
@@ -283,19 +262,14 @@
             </a>`;
     }
 
-    // prateleiras de sentimento (os 8)
     for (let i = 0; i < nomesSentimentos.length; i++) {
         moods.innerHTML += `<a href="#historias" class="mood" style="background: ${coresSentimentos[i]}">${nomesSentimentos[i]}${notaGrande}</a>`;
     }
 
-    // ranking: só os 5 primeiros sentimentos
     for (let i = 0; i < 5; i++) {
         rank.innerHTML += `<div class="row"><div class="t"><b>${nomesSentimentos[i]}</b><span>1 história</span></div><div class="bar" style="background: #2a2a2a"><i style="width: 100%; background: ${coresSentimentos[i]}"></i></div></div>`;
     }
 
-    // artistas lembrados
-    // não temos foto dos artistas, então usamos a capa do álbum da música deles
-    // sem capa, aparece a inicial (primeira letra do nome) na cor do sentimento
     for (let i = 0; i < nomesArtistas.length; i++) {
         let inicial = nomesArtistas[i].charAt(0);
         let fundoArtista = `background: ${coresHistoria[i]}`;
@@ -313,7 +287,6 @@
             </div>`;
     }
 
-    // perguntas frequentes
     for (let i = 0; i < perguntas.length; i++) {
         faq.innerHTML += `
             <div class="q">
@@ -322,9 +295,6 @@
             </div>`;
     }
 
-    // ---------- FUNÇÃO DO CLIQUE NA PERGUNTA ----------
-    // "botao" é o botão que foi clicado; o pai dele é a div com class="q"
-    // se a class "open" não existe, o toggle coloca; se existe, tira
     function abrirFechar(botao) {
         let pergunta = botao.parentNode;
         pergunta.classList.toggle('open');

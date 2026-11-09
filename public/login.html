@@ -1,174 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TrilhaSonora · Entrar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{
-  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-  --bg:#121212;--card:#181818;--line:#2a2a2a;--field:#262626;--text:#fff;--muted:#a3a3a3;--green:#22c55e;--err:#f87171;
-}
-html{height:100%}
-*,*::before,*::after{box-sizing:border-box}
-body{margin:0;min-height:100%;color:var(--text);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;
-  background:radial-gradient(ellipse 55% 300px at 50% 0%,rgba(34,197,94,.2),rgba(34,197,94,0) 100%),var(--bg);background-repeat:no-repeat;
-  display:flex;align-items:center;justify-content:center;padding:32px 16px}
-a{color:var(--green);text-decoration:none;font-weight:700}
-a:hover{text-decoration:underline}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar - TrilhaSonora</title>
 
-.card{width:100%;max-width:315px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:27px 26px 28px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
-.logo{display:block;text-align:center;font-size:24px;font-weight:800;letter-spacing:-.6px;color:#fff;margin:6px 0 20px}
-.logo span{color:var(--green)}
-h1{font-size:18px;line-height:1.35;font-weight:700;text-align:center;margin:0 0 8px;letter-spacing:-.2px}
-.sub{font-size:11px;line-height:1.65;color:#b5b5b5;text-align:center;margin:0 0 20px}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-.view{display:none}
-.view.on{display:block}
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.f{margin-bottom:14px}
-label{display:block;font-size:11px;font-weight:600;margin-bottom:6px;color:#fff}
-.in{position:relative}
-input[type=text],input[type=email],input[type=password]{
-  width:100%;height:36px;background:var(--field);border:1px solid transparent;border-radius:6px;color:#fff;
-  font:400 12px 'Inter',system-ui,sans-serif;padding:0 13px;outline:none;transition:border-color .15s,box-shadow .15s}
-input::placeholder{color:#7d7d7d}
-input:focus{border-color:var(--green);box-shadow:0 0 0 2px rgba(34,197,94,.2)}
-input.bad{border-color:var(--err)}
-.in.pw input{padding-right:40px}
-.eye{position:absolute;right:4px;top:0;width:34px;height:36px;display:grid;place-items:center;background:none;border:0;color:#bdbdbd;cursor:pointer;border-radius:6px}
-.eye:hover{color:#fff}
-.eye svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.err{display:none;color:var(--err);font-size:10px;margin-top:5px}
-.f.has-err .err{display:block}
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: radial-gradient(ellipse at top, rgba(34, 197, 94, 0.22), transparent 55%), #121212;
+        }
 
-.opts{display:flex;justify-content:space-between;align-items:center;font-size:11px;margin:-2px 0 14px}
-.chk{display:flex;align-items:center;gap:7px;color:#d4d4d4;cursor:pointer;font-weight:400;margin:0;font-size:11px}
-.chk input{appearance:none;-webkit-appearance:none;width:12px;height:12px;margin:0;border-radius:2px;background:var(--field);border:1px solid #4a4a4a;display:grid;place-items:center;cursor:pointer}
-.chk input:checked{background:var(--green);border-color:var(--green)}
-.chk input:checked::after{content:"";width:3px;height:6px;border:solid #0b2a14;border-width:0 1.6px 1.6px 0;transform:rotate(45deg) translate(-.5px,-.5px)}
-.opts a{font-size:11px}
+        .card {
+            width: 100%;
+            max-width: 340px;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
 
-.btn{width:100%;height:36px;border:0;border-radius:999px;background:var(--green);color:#0b2a14;font:700 12px 'Inter',system-ui,sans-serif;cursor:pointer;transition:background .15s,transform .05s;margin-top:2px}
-.btn:hover{background:#2fd06b}
-.btn:active{transform:scale(.99)}
-.btn:disabled{opacity:.7;cursor:default}
-.alt{text-align:center;font-size:11px;color:#b5b5b5;margin:20px 0 0}
-.alt a{font-size:11px}
-.msg{display:none;margin:0 0 14px;padding:9px 12px;border-radius:8px;font-size:11px;line-height:1.5}
-.msg.ok{display:block;background:#12301d;color:#7be3a1;border:1px solid #1f5a35}
-.msg.no{display:block;background:#33181a;color:#f5a5a5;border:1px solid #5c2a2d}
-</style>
+        .logo {
+            display: block;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .logo span {
+            color: #22c55e;
+        }
+
+        h1 {
+            font-size: 19px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .sub {
+            font-size: 12px;
+            color: #b3b3b3;
+            text-align: center;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .campo {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            height: 38px;
+            background: #242424;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 0 40px 0 12px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #737373;
+        }
+
+        input:focus {
+            border-color: #22c55e;
+        }
+
+        .olho {
+            position: absolute;
+            right: 8px;
+            top: 4px;
+            width: 30px;
+            height: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #b3b3b3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .linha label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .linha input {
+            accent-color: #22c55e;
+        }
+
+        a {
+            color: #22c55e;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            height: 38px;
+            background: #22c55e;
+            color: #000;
+            border: none;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #4ade80;
+        }
+
+        #div_msg {
+            font-size: 12px;
+            text-align: center;
+            min-height: 16px;
+            margin-bottom: 10px;
+        }
+
+        .rodape {
+            font-size: 12px;
+            color: #b3b3b3;
+            text-align: center;
+            margin-top: 16px;
+        }
+    </style>
 </head>
+
 <body>
 
-<main class="card">
-  <a class="logo" href="#entrar" aria-label="TrilhaSonora">Trilha<span>Sonora</span></a>
+    <div class="card">
+        <a href="home.html" class="logo">Trilha<span>Sonora</span></a>
 
-  <!-- CADASTRO -->
-  <section class="view" id="v-cadastro">
-    <h1>Sua próxima lembrança<br>começa aqui.</h1>
-    <p class="sub">Crie sua conta e descubra as histórias e emoções que conectam as pessoas por meio da música.</p>
-    <div class="msg" id="m-cadastro" role="status"></div>
-    <form id="f-cadastro" novalidate>
-      <div class="f"><label for="c-nome">Nome completo</label>
-        <div class="in"><input id="c-nome" type="text" placeholder="Seu nome" autocomplete="name"></div>
-        <div class="err"></div></div>
-      <div class="f"><label for="c-email">E-mail</label>
-        <div class="in"><input id="c-email" type="email" placeholder="voce@exemplo.com" autocomplete="email"></div>
-        <div class="err"></div></div>
-      <div class="f"><label for="c-senha">Senha</label>
-        <div class="in pw"><input id="c-senha" type="password" placeholder="Mínimo 8 caracteres, com letra e número" autocomplete="new-password">
-          <button class="eye" type="button" aria-label="Mostrar senha"></button></div>
-        <div class="err"></div></div>
-      <div class="f"><label for="c-conf">Confirmar senha</label>
-        <div class="in pw"><input id="c-conf" type="password" placeholder="Repita a senha" autocomplete="new-password">
-          <button class="eye" type="button" aria-label="Mostrar senha"></button></div>
-        <div class="err"></div></div>
-      <button class="btn" type="submit">Criar minha conta</button>
-    </form>
-    <p class="alt">Já tem uma conta? <a href="#entrar">Entrar</a></p>
-  </section>
+        <h1>Que bom ter você de volta!</h1>
+        <p class="sub">Entre na sua conta e continue compartilhando suas histórias musicais.</p>
 
-  <!-- LOGIN -->
-  <section class="view" id="v-entrar">
-    <h1>Que bom ter você de volta!</h1>
-    <p class="sub">Entre na sua conta e continue compartilhando suas histórias musicais.</p>
-    <div class="msg" id="m-entrar" role="status"></div>
-    <form id="f-entrar" novalidate>
-      <div class="f"><label for="l-email">E-mail</label>
-        <div class="in"><input id="l-email" type="email" placeholder="voce@exemplo.com" autocomplete="email"></div>
-        <div class="err"></div></div>
-      <div class="f"><label for="l-senha">Senha</label>
-        <div class="in pw"><input id="l-senha" type="password" placeholder="Sua senha" autocomplete="current-password">
-          <button class="eye" type="button" aria-label="Mostrar senha"></button></div>
-        <div class="err"></div></div>
-      <div class="opts">
-        <label class="chk"><input type="checkbox" id="l-manter" checked> Manter conectado</label>
-        <a href="#esqueci" id="esqueci">Esqueceu sua senha?</a>
-      </div>
-      <button class="btn" type="submit">Entrar</button>
-    </form>
-    <p class="alt">Ainda não tem uma conta? <a href="#cadastro">Criar conta</a></p>
-  </section>
-</main>
+        <label for="ipt_email">E-mail</label>
+        <div class="campo">
+            <input type="text" id="ipt_email" placeholder="voce@exemplo.com">
+        </div>
+
+        <label for="ipt_senha">Senha</label>
+        <div class="campo">
+            <input type="password" id="ipt_senha" placeholder="Sua senha">
+            <button type="button" class="olho" onclick="verSenha()" aria-label="Mostrar senha">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="linha">
+            <label><input type="checkbox" id="chk_manter" checked> Manter conectado</label>
+            <a href="#">Esqueceu sua senha?</a>
+        </div>
+
+        <div id="div_msg"></div>
+
+        <button class="btn" onclick="entrar()">Entrar</button>
+
+        <p class="rodape">Ainda não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+    </div>
+
+</body>
 
 <script>
-(function(){
-  var EYE='<svg viewBox="0 0 24 24"><path d="M2.06 12.35a1 1 0 0 1 0-.7 10.75 10.75 0 0 1 19.88 0 1 1 0 0 1 0 .7 10.75 10.75 0 0 1-19.88 0"/><circle cx="12" cy="12" r="3"/></svg>';
-  var EYEOFF='<svg viewBox="0 0 24 24"><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c4.5 0 8.35 2.8 9.94 6.65a1 1 0 0 1 0 .7 10.8 10.8 0 0 1-1.67 2.68"/><path d="M6.61 6.61A10.7 10.7 0 0 0 2.06 11.65a1 1 0 0 0 0 .7C3.65 16.2 7.5 19 12 19a10.7 10.7 0 0 0 5.39-1.61"/><path d="M14.12 14.12A3 3 0 1 1 9.88 9.88"/><path d="m2 2 20 20"/></svg>';
-  var $=function(id){return document.getElementById(id)};
-
-  /* mostrar / ocultar senha */
-  document.querySelectorAll('.eye').forEach(function(b){
-    b.innerHTML=EYE;
-    b.addEventListener('click',function(){
-      var i=b.parentNode.querySelector('input'),show=i.type==='password';
-      i.type=show?'text':'password';
-      b.innerHTML=show?EYEOFF:EYE;
-      b.setAttribute('aria-label',show?'Ocultar senha':'Mostrar senha');
-    });
-  });
-
-  function note(id,type,text){var m=$(id);m.className='msg '+type;m.textContent=text}
-  function setErr(input,text){var f=input.closest('.f');f.classList.add('has-err');input.classList.add('bad');f.querySelector('.err').textContent=text}
-  function reset(form){form.querySelectorAll('.f').forEach(function(f){f.classList.remove('has-err');f.querySelector('input').classList.remove('bad')})}
-  var EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-  function loadUsers(){try{return JSON.parse(localStorage.getItem('ts_users')||'[]')}catch(e){return []}}
-
-  $('f-entrar').addEventListener('submit',function(e){
-    e.preventDefault();reset(this);
-    var em=$('l-email'),s=$('l-senha'),ok=true;
-    if(!EMAIL.test(em.value.trim())){setErr(em,'Digite um e-mail válido.');ok=false}
-    if(!s.value){setErr(s,'Digite sua senha.');ok=false}
-    if(!ok){note('m-entrar','no','Revise os campos destacados.');return}
-
-    var users = loadUsers();
-    var user = users.find(function(u){return u.email.toLowerCase()===em.value.trim().toLowerCase()});
-    if(!user || user.password!==s.value){setErr(s,'E-mail ou senha inválidos.');note('m-entrar','no','Credenciais incorretas.');return}
-
-    var session = {email:user.email,name:user.name};
-    if(document.getElementById('l-manter').checked){
-      localStorage.setItem('ts_session',JSON.stringify(session));
-    } else {
-      sessionStorage.setItem('ts_session',JSON.stringify(session));
+    // mostra ou esconde a senha
+    function verSenha() {
+        if (ipt_senha.type === 'password') {
+            ipt_senha.type = 'text';
+        } else {
+            ipt_senha.type = 'password';
+        }
     }
-    note('m-entrar','ok','Login realizado! Redirecionando…');
-    setTimeout(function(){location.href='index.html'},800);
-  });
 
-  $('esqueci').addEventListener('click',function(e){
-    e.preventDefault();
-    var em=$('l-email');
-    if(!EMAIL.test(em.value.trim())){setErr(em,'Digite seu e-mail para recuperar a senha.');em.focus();return}
-    note('m-entrar','ok','Se o e-mail estiver cadastrado, enviaremos um link para criar uma nova senha. (demo)');
-  });
+    function entrar() {
+        let email = ipt_email.value;
+        let senha = ipt_senha.value;
 
-})();
+        div_msg.style.color = '#f87171';
+
+        if (email === '' || senha === '') {
+            div_msg.innerHTML = 'Preencha o e-mail e a senha.';
+        } else if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+            div_msg.innerHTML = 'Digite um e-mail válido.';
+        } else {
+            div_msg.style.color = '#22c55e';
+            div_msg.innerHTML = 'Entrando...';
+
+            // depois, aqui entra a verificação com o banco de dados
+            setTimeout(function () {
+                window.location.href = 'home.html';
+            }, 1000);
+        }
+    }
 </script>
-</body>
+
 </html>

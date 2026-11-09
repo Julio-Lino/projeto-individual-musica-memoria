@@ -1,196 +1,334 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>TrilhaSonora</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrilhaSonora</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
 </head>
+
 <body>
 
-<header>
-  <div class="nav">
-    <a href="#" class="logo">Trilha<span>Sonora</span></a>
-    <nav>
-      <a href="#destaque">Fórum</a>
-      <a href="#sentimentos">Dashboard</a>
-      <a href="#artistas">Perfil</a>
-      <span id="auth-links"></span>
-    </nav>
-  </div>
-</header>
+    <header>
+        <div class="nav">
+            <a href="#" class="logo">Trilha<span>Sonora</span></a>
+            <nav>
+                <a href="#destaque">Fórum</a>
+                <a href="#sentimentos">Dashboard</a>
+                <a href="#artistas">Perfil</a>
+                <a href="login.html" class="btn-out">Entrar</a>
+            </nav>
+        </div>
+    </header>
 
-<section class="hero">
-  <p class="hello">Boa noite</p>
-  <h1>Toda música guarda uma <em>história</em>.</h1>
-  <p class="lead">Um projeto acadêmico que junta as canções que marcaram vidas reais com os sentimentos e as memórias por trás delas — e mostra o que a música guarda de nós.</p>
-  <div class="cta">
-    <a href="#participar" class="btn g">Criar conta grátis</a>
-    <a href="#destaque" class="btn o">Explorar o fórum</a>
-  </div>
-  <div class="chips" id="chips"></div>
-</section>
+    <section class="hero">
+        <p class="hello">Boa noite</p>
+        <h1>Toda música guarda uma <em>história</em>.</h1>
+        <p class="lead">Um projeto acadêmico que junta as canções que marcaram vidas reais com os sentimentos e as memórias por trás delas — e mostra o que a música guarda de nós.</p>
+        <div class="cta">
+            <a href="cadastro.html" class="btn g">Criar conta grátis</a>
+            <a href="#destaque" class="btn o">Explorar o fórum</a>
+        </div>
 
-<main>
-  <section class="about" id="sobre">
-    <div class="panel">
-      <p class="label">Sobre o projeto</p>
-      <h2>Música não é só som — é memória.</h2>
-      <p>O TrilhaSonora é um projeto acadêmico sobre a relação entre músicas, emoções e memórias: por que certas canções voltam sempre acompanhadas de um momento da nossa vida. Aqui, cada história publicada é um pedaço real dessa investigação — contado por quem viveu.</p>
-      <p>A ideia nasceu de uma pergunta simples: se você tivesse que escolher uma música para resumir sua história, qual seria? As respostas, reunidas em comunidade, viraram este site.</p>
-      <div class="by">Feito por Julio Lino · Projeto acadêmico</div>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>6</b><span>histórias já contadas pela comunidade</span></div>
-      <div class="stat"><b>8</b><span>sentimentos que organizam cada memória</span></div>
-      <div class="stat"><b>6</b><span>artistas lembrados nas histórias</span></div>
-    </div>
-  </section>
+        <!-- os chips são preenchidos pelo JavaScript lá embaixo -->
+        <div class="chips" id="chips"></div>
+    </section>
 
-  <section class="feat-wrap" id="destaque">
-    <p class="label">Em destaque</p>
-    <div class="panel feat">
-      <div class="l">
-        <svg viewBox="0 0 24 24" class="ico" style="stroke-width:2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
-        <div><h3>Trem-Bala</h3><p>Ana Vilela</p></div>
-      </div>
-      <div class="r">
-        <span class="tag">Saudade</span>
-        <blockquote>Ouvi essa música no dia em que me mudei para outra cidade. Toda vez que toca, lembro da minha mãe me abraçando na rodoviária.</blockquote>
-        <div class="meta">Marina Costa · há 10 d</div>
-        <a href="#historias" class="more">Ler todas as histórias <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
-    </div>
-  </section>
+    <main>
+        <section class="about" id="sobre">
+            <div class="panel">
+                <p class="label">Sobre o projeto</p>
+                <h2>Música não é só som — é memória.</h2>
+                <p>O TrilhaSonora é um projeto acadêmico sobre a relação entre músicas, emoções e memórias: por que certas canções voltam sempre acompanhadas de um momento da nossa vida. Aqui, cada história publicada é um pedaço real dessa investigação — contado por quem viveu.</p>
+                <p>A ideia nasceu de uma pergunta simples: se você tivesse que escolher uma música para resumir sua história, qual seria? As respostas, reunidas em comunidade, viraram este site.</p>
+                <div class="by">Feito por Julio Lino · Projeto acadêmico</div>
+            </div>
+            <div class="stats">
+                <div class="stat"><b>6</b><span>histórias já contadas pela comunidade</span></div>
+                <div class="stat"><b>8</b><span>sentimentos que organizam cada memória</span></div>
+                <div class="stat"><b>6</b><span>artistas lembrados nas histórias</span></div>
+            </div>
+        </section>
 
-  <div class="sec-head" id="historias">
-    <h2>Histórias que tocaram a comunidade</h2>
-    <a href="#">Mostrar tudo</a>
-  </div>
-  <div class="cards" id="cards"></div>
+        <section class="feat-wrap" id="destaque">
+            <p class="label">Em destaque</p>
+            <div class="panel feat">
+                <!--
+                    Lado esquerdo do destaque:
+                    1) a primeira div é o fundo: a mesma foto, borrada e escurecida (preenche tudo)
+                    2) a segunda div fica por cima: a foto inteira, sem zoom, com o nome da música e o artista
+                -->
+                <div class="l" style="position: relative; overflow: hidden; padding: 0; min-height: 280px; background: #000">
+                    <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-image: url('./assets/less_than_zero.jpeg'); background-size: cover; background-position: center; filter: blur(30px) brightness(0.5); transform: scale(1.3)"></div>
 
-  <section class="sec" id="sentimentos">
-    <h2>Navegue por sentimento</h2>
-    <p class="sub">Cada memória publicada entra em uma dessas prateleiras.</p>
-    <div class="moods" id="moods"></div>
+                    <div style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 24px; height: 100%">
+                        <img src="./assets/less_than_zero.jpeg" alt="Capa de Less Than Zero" style="width: 232px; height: 232px; object-fit: cover; border-radius: 16px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5)">
+                        <div>
+                            <h3>Less Than Zero</h3>
+                            <p>The Weeknd</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="r">
+                    <span class="tag">Conforto</span>
+                    <blockquote>Eu tinha 16 anos e, numa noite qualquer, fiquei sentado na varanda de casa, sozinho, com o fone no ouvido e a casa em silêncio lá dentro. Essa música tocou e eu fiquei pensando em como tudo passou rápido: a infância, as tardes de domingo, as vozes da minha família na sala. Olhei para a luz acesa da cozinha e percebi que eu estava vivendo, sem me dar conta, os dias que um dia eu ia sentir saudade. Fechei os olhos, deixei a música ir até o fim e senti uma gratidão enorme por estar ali. Desde então, quando coloco o fone e ela começa, lembro que a vida é bonita justamente por essas coisas pequenas que eu quase não percebia.</blockquote>
+                    <div class="meta">Julio Lino · há 1 d</div>
+                    <a href="#historias" class="more">Ler todas as histórias
+                        <svg viewBox="0 0 24 24" class="ico">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <div class="panel rank">
-      <h2>Sentimentos mais publicados</h2>
-      <p class="sub">Como a comunidade tem registrado suas memórias até agora.</p>
-      <div id="rank"></div>
-    </div>
-  </section>
+        <div class="sec-head" id="historias">
+            <h2>Histórias que tocaram a comunidade</h2>
+            <a href="#">Mostrar tudo</a>
+        </div>
 
-  <section class="sec narrow" id="artistas">
-    <h2>Artistas lembrados</h2>
-    <div class="artists" id="artists"></div>
-  </section>
+        <!-- os cards são preenchidos pelo JavaScript -->
+        <div class="cards" id="cards"></div>
 
-  <section class="sec narrow" id="participar">
-    <h2>Como participar</h2>
-    <div class="steps">
-      <div class="step"><span class="n">01</span>
-        <svg viewBox="0 0 24 24" class="ico"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-        <b>Escolha uma música</b><p>A canção que marcou um momento da sua vida.</p></div>
-      <div class="step"><span class="n">02</span>
-        <svg viewBox="0 0 24 24" class="ico"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
-        <b>Registre o sentimento</b><p>Saudade, alegria, amor — o que ela desperta?</p></div>
-      <div class="step"><span class="n">03</span>
-        <svg viewBox="0 0 24 24" class="ico"><path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.855z"/></svg>
-        <b>Conte a história</b><p>Compartilhe a memória com a comunidade.</p></div>
-    </div>
-  </section>
+        <section class="sec" id="sentimentos">
+            <h2>Navegue por sentimento</h2>
+            <p class="sub">Cada memória publicada entra em uma dessas prateleiras.</p>
 
-  <section class="sec narrow">
-    <h2>Perguntas frequentes</h2>
-    <div class="faq" id="faq"></div>
-  </section>
+            <!-- as prateleiras de sentimento são preenchidas pelo JavaScript -->
+            <div class="moods" id="moods"></div>
 
-  <div class="banner">
-    <div class="in">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <div><b>Sua trilha sonora merece ser contada.</b><small>Junte-se a quem transforma música em memória.</small></div>
-    </div>
-    <a href="#" class="btn g">Começar agora</a>
-  </div>
-</main>
+            <div class="panel rank">
+                <h2>Sentimentos mais publicados</h2>
+                <p class="sub">Como a comunidade tem registrado suas memórias até agora.</p>
+                <div id="rank"></div>
+            </div>
+        </section>
+
+        <section class="sec narrow" id="artistas">
+            <h2>Artistas lembrados</h2>
+            <div class="artists" id="artists"></div>
+        </section>
+
+        <section class="sec narrow" id="participar">
+            <h2>Como participar</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="n">01</span>
+                    <svg viewBox="0 0 24 24" class="ico">
+                        <path d="M9 18V5l12-2v13" />
+                        <circle cx="6" cy="18" r="3" />
+                        <circle cx="18" cy="16" r="3" />
+                    </svg>
+                    <b>Escolha uma música</b>
+                    <p>A canção que marcou um momento da sua vida.</p>
+                </div>
+
+                <div class="step">
+                    <span class="n">02</span>
+                    <svg viewBox="0 0 24 24" class="ico">
+                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                        <path d="M20 3v4" />
+                        <path d="M22 5h-4" />
+                        <path d="M4 17v2" />
+                        <path d="M5 18H3" />
+                    </svg>
+                    <b>Registre o sentimento</b>
+                    <p>Saudade, alegria, amor — o que ela desperta?</p>
+                </div>
+
+                <div class="step">
+                    <span class="n">03</span>
+                    <svg viewBox="0 0 24 24" class="ico">
+                        <path d="M12 20h9" />
+                        <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.855z" />
+                    </svg>
+                    <b>Conte a história</b>
+                    <p>Compartilhe a memória com a comunidade.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec narrow">
+            <h2>Perguntas frequentes</h2>
+
+            <!-- as perguntas são preenchidas pelo JavaScript -->
+            <div class="faq" id="faq"></div>
+        </section>
+
+        <div class="banner">
+            <div class="in">
+                <svg viewBox="0 0 24 24" class="ico">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <div>
+                    <b>Sua trilha sonora merece ser contada.</b>
+                    <small>Junte-se a quem transforma música em memória.</small>
+                </div>
+            </div>
+            <a href="cadastro.html" class="btn g">Começar agora</a>
+        </div>
+    </main>
+
+</body>
 
 <script>
-let NOTE='<svg viewBox="0 0 24 24" class="ico" width="%s" height="%s"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
-let C={Saudade:'let(--c-saudade)',Alegria:'let(--c-alegria)',Amor:'let(--c-amor)',Esperança:'let(--c-esperanca)',Nostalgia:'let(--c-nostalgia)',Conforto:'let(--c-conforto)',Tristeza:'let(--c-tristeza)',Energia:'let(--c-energia)'};
-let S=[
- {t:'Trem-Bala',a:'Ana Vilela',m:'Saudade',u:'Marina Costa',d:'há 10 d',ar:'Ana Vilela'},
- {t:'Here Comes the Sun',a:'The Beatles',m:'Esperança',u:'Rafael Lima',d:'há 10 d'},
- {t:'Evidências',a:'Chitãozinho &amp;...',m:'Alegria',u:'Juliana Prado',d:'há 10 d'},
- {t:'Fix You',a:'Coldplay',m:'Conforto',u:'Pedro Alves',d:'há 11 d'},
- {t:'Velha Infância',a:'Tribalistas',m:'Amor',u:'Camila Rocha',d:'há 12 d'},
- {t:'Bohemian Rhapsody',a:'Queen',m:'Nostalgia',u:'Lucas Mendes',d:'há 13 d'}
-];
-function $(id){return document.getElementById(id)}
+    // ---------- ÍCONES (desenho da nota musical) ----------
+    // um pequeno e um grande, para não precisar trocar o tamanho depois
+    let notaPequena = '<svg viewBox="0 0 24 24" class="ico" width="32" height="32"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+    let notaGrande = '<svg viewBox="0 0 24 24" class="ico" width="84" height="84"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+    let iconeMais = '<svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
 
-$('chips').innerHTML=S.map(function(s){
-  return '<a href="#historias" class="chip"><div class="sq" style="background:'+C[s.m]+'">'+NOTE.replace(/%s/g,'32')+'</div><div><b>'+s.t+'</b><small>'+s.a+'</small></div></a>';
-}).join('');
+    // ---------- DADOS DAS HISTÓRIAS (cada posição é uma história) ----------
+    let titulos = ['Esperando Na Janela', 'Snowman', 'Exagero', 'Me Libera', 'I Gotta Feeling', 'Less Than Zero'];
+    let artistas = ['Cogumelo Plutão', 'Sia', 'Sofi Frozza', 'Banda Djavú', 'Black Eyed Paes', 'The Weeknd'];
+    let sentimentosHistoria = ['Esperança', 'Saudade', 'Amor', 'Nostalgia', 'Alegria', 'Conforto'];
+    let usuarios = ['Débora Vicente', 'Vampira', 'Cata Condez', 'Raphael Lino', 'Eduarda Vicente', 'Julio Lino'];
+    let datas = ['há 10 d', 'há 10 d', 'há 7 d', 'há 11 d', 'há 12 d', 'há 1 d'];
 
-$('cards').innerHTML=S.map(function(s){
-  return '<a href="#destaque" class="cd"><div class="art" style="background:'+C[s.m]+'">'+s.m+'</div><b>'+s.t+'</b><small>'+s.u+' · '+s.d+'</small></a>';
-}).join('');
+    // caminho da foto da capa de cada álbum (mesma ordem dos títulos)
+    // as imagens ficam na pasta "assets" ao lado do home.html
+    // se quiser deixar uma música sem capa, coloque '' (aí volta a cor / a notinha)
+    let capas = [
+        './assets/esperando_na_janela.jpeg',
+        './assets/snowman.jpeg',
+        './assets/Exagero.jpeg',
+        './assets/me_libera.jpeg',
+        './assets/i_gotta_feeling.jpeg',
+        './assets/less_than_zero.jpeg'
+    ];
 
-$('moods').innerHTML=Object.keys(C).map(function(k){
-  return '<a href="#historias" class="mood" style="background:'+C[k]+'">'+k+NOTE.replace(/%s/g,'84')+'</a>';
-}).join('');
+    // a cor segue o sentimento de cada história (mesma ordem de sentimentosHistoria)
+    let coresHistoria = [
+        'var(--c-esperanca)',
+        'var(--c-saudade)',
+        'var(--c-amor)',
+        'var(--c-nostalgia)',
+        'var(--c-alegria)',
+        'var(--c-conforto)'
+    ];
 
-$('rank').innerHTML=['Saudade','Alegria','Amor','Esperança','Nostalgia'].map(function(k){
-  return '<div class="row"><div class="t"><b>'+k+'</b><span>1 história</span></div><div class="bar" style="background:#2a2a2a"><i style="width:100%;background:'+C[k]+'"></i></div></div>';
-}).join('');
+    // ---------- DADOS DOS SENTIMENTOS ----------
+    let nomesSentimentos = ['Saudade', 'Alegria', 'Amor', 'Esperança', 'Nostalgia', 'Conforto', 'Tristeza', 'Energia'];
+    let coresSentimentos = [
+        'var(--c-saudade)',
+        'var(--c-alegria)',
+        'var(--c-amor)',
+        'var(--c-esperanca)',
+        'var(--c-nostalgia)',
+        'var(--c-conforto)',
+        'var(--c-tristeza)',
+        'var(--c-energia)'
+    ];
 
-let ART=[['Ana Vilela','saudade'],['The Beatles','esperanca'],['Chitãozinho &amp; Xororó','alegria'],['Coldplay','conforto'],['Tribalistas','amor'],['Queen','nostalgia']];
-$('artists').innerHTML=ART.map(function(x){
-  let init=x[0].replace('The ','').charAt(0);
-  if(x[0]==='The Beatles')init='T'; if(x[0]==='Tribalistas')init='T';
-  return '<div class="art-i"><div class="av" style="background:let(--c-'+x[1]+')">'+init+'</div><b>'+x[0]+'</b><small>Artista</small></div>';
-}).join('');
+    // ---------- DADOS DOS ARTISTAS (a cor é a mesma da história, na mesma ordem) ----------
+    let nomesArtistas = ['Cogumelo Plutão', 'Sia', 'Sofi Frozza', 'Banda Djavú', 'Black Eyed Paes', 'The Weeknd'];
 
-let PLUS='<svg viewBox="0 0 24 24" class="ico"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
-let FAQ=[
- ['O que é o TrilhaSonora?','Um projeto acadêmico que reúne canções que marcaram vidas reais, junto com os sentimentos e as memórias por trás delas.'],
- ['Quem pode publicar uma história?','Qualquer pessoa com uma conta pode escolher uma música, registrar o sentimento e contar sua memória para a comunidade.'],
- ['Criar conta custa alguma coisa?','Não. Criar conta e participar da comunidade é totalmente grátis.'],
- ['Esqueci minha senha. E agora?','Na tela de entrada, use a opção de recuperar senha. Enviaremos um link para o seu e-mail para você criar uma nova.']
-];
-$('faq').innerHTML=FAQ.map(function(f){
-  return '<div class="q"><button type="button" aria-expanded="false"><span>'+f[0]+'</span>'+PLUS+'</button><div class="a">'+f[1]+'</div></div>';
-}).join('');
-  document.querySelectorAll('.q button').forEach(function(b){
-    b.addEventListener('click',function(){
-      let q=b.parentNode,o=q.classList.toggle('open');
-      b.setAttribute('aria-expanded',o);
-    });
-  });
-  </script>
-  <!-- Autenticação simples (front-end) -->
-  <script>
-  (function(){
-    function getSession(){
-      return JSON.parse(sessionStorage.getItem('ts_session')||localStorage.getItem('ts_session')||'null');
+    // ---------- DADOS DAS PERGUNTAS FREQUENTES ----------
+    let perguntas = [
+        'O que é o TrilhaSonora?',
+        'Quem pode publicar uma história?',
+        'Criar conta custa alguma coisa?',
+        'Esqueci minha senha. E agora?'
+    ];
+    let respostas = [
+        'Um projeto acadêmico que reúne canções que marcaram vidas reais, junto com os sentimentos e as memórias por trás delas.',
+        'Qualquer pessoa com uma conta pode escolher uma música, registrar o sentimento e contar sua memória para a comunidade.',
+        'Não. Criar conta e participar da comunidade é totalmente grátis.',
+        'Na tela de entrada, use a opção de recuperar senha. Enviaremos um link para o seu e-mail para você criar uma nova.'
+    ];
+
+    // ---------- MONTANDO A TELA ----------
+
+    // chips do topo (um por história)
+    for (let i = 0; i < titulos.length; i++) {
+        // começa com a notinha; se tiver foto de capa, troca pela foto
+        let icone = notaPequena;
+
+        if (capas[i] !== '') {
+            icone = `<img src="${capas[i]}" alt="Capa de ${titulos[i]}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit">`;
+        }
+
+        chips.innerHTML += `
+            <a href="#historias" class="chip">
+                <div class="sq" style="background: ${coresHistoria[i]}">${icone}</div>
+                <div>
+                    <b>${titulos[i]}</b>
+                    <small>${artistas[i]}</small>
+                </div>
+            </a>`;
     }
-    function renderAuth(){
-      var mount=document.getElementById('auth-links');
-      var s=getSession();
-      if(!mount) return;
-      if(s && s.email){
-        mount.innerHTML = '<a href="perfil.html">'+(s.name||s.email)+'</a> <a href="#" id="logout" class="btn-out">Sair</a>';
-        var btn = document.getElementById('logout');
-        if(btn) btn.addEventListener('click',function(e){e.preventDefault();localStorage.removeItem('ts_session');sessionStorage.removeItem('ts_session');location.reload();});
-      } else {
-        mount.innerHTML = '<a href="login.html" class="btn-out">Entrar</a> <a href="cadastro.html" class="btn-out" style="margin-left:8px">Criar conta</a>';
-      }
+
+    // cards "Histórias que tocaram a comunidade"
+    for (let i = 0; i < titulos.length; i++) {
+        // começa só com a cor; se tiver capa, põe a foto com um escurecido por cima
+        // (o escurecido ajuda a ler o nome do sentimento em cima da foto)
+        let fundo = `background: ${coresHistoria[i]}`;
+
+        if (capas[i] !== '') {
+            fundo = `background-color: ${coresHistoria[i]}; background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${capas[i]}'); background-size: cover; background-position: center`;
+        }
+
+        cards.innerHTML += `
+            <a href="#destaque" class="cd">
+                <div class="art" style="${fundo}">${sentimentosHistoria[i]}</div>
+                <b>${titulos[i]}</b>
+                <small>${usuarios[i]} · ${datas[i]}</small>
+            </a>`;
     }
-    renderAuth();
-  })();
-  </script>
-  </body>
+
+    // prateleiras de sentimento (os 8)
+    for (let i = 0; i < nomesSentimentos.length; i++) {
+        moods.innerHTML += `<a href="#historias" class="mood" style="background: ${coresSentimentos[i]}">${nomesSentimentos[i]}${notaGrande}</a>`;
+    }
+
+    // ranking: só os 5 primeiros sentimentos
+    for (let i = 0; i < 5; i++) {
+        rank.innerHTML += `<div class="row"><div class="t"><b>${nomesSentimentos[i]}</b><span>1 história</span></div><div class="bar" style="background: #2a2a2a"><i style="width: 100%; background: ${coresSentimentos[i]}"></i></div></div>`;
+    }
+
+    // artistas lembrados
+    // não temos foto dos artistas, então usamos a capa do álbum da música deles
+    // sem capa, aparece a inicial (primeira letra do nome) na cor do sentimento
+    for (let i = 0; i < nomesArtistas.length; i++) {
+        let inicial = nomesArtistas[i].charAt(0);
+        let fundoArtista = `background: ${coresHistoria[i]}`;
+
+        if (capas[i] !== '') {
+            inicial = '';
+            fundoArtista = `background-color: ${coresHistoria[i]}; background-image: url('${capas[i]}'); background-size: cover; background-position: center`;
+        }
+
+        artists.innerHTML += `
+            <div class="art-i">
+                <div class="av" style="${fundoArtista}">${inicial}</div>
+                <b>${nomesArtistas[i]}</b>
+                <small>Artista</small>
+            </div>`;
+    }
+
+    // perguntas frequentes
+    for (let i = 0; i < perguntas.length; i++) {
+        faq.innerHTML += `
+            <div class="q">
+                <button type="button" onclick="abrirFechar(this)"><span>${perguntas[i]}</span>${iconeMais}</button>
+                <div class="a">${respostas[i]}</div>
+            </div>`;
+    }
+
+    // ---------- FUNÇÃO DO CLIQUE NA PERGUNTA ----------
+    // "botao" é o botão que foi clicado; o pai dele é a div com class="q"
+    // se a class "open" não existe, o toggle coloca; se existe, tira
+    function abrirFechar(botao) {
+        let pergunta = botao.parentNode;
+        pergunta.classList.toggle('open');
+    }
+</script>
+
 </html>

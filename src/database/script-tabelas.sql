@@ -1,17 +1,15 @@
 -- script-tabelas.sql
--- Exemplo de script para criação de tabelas iniciais
+-- Comandos para MySQL Server (o script anterior estava em sintaxe PostgreSQL e não roda no MySQL).
+-- Execute no MySQL Workbench e use o nome do banco no .env / .env.dev (DB_DATABASE).
 
-CREATE TABLE IF NOT EXISTS usuarios (
-  id SERIAL PRIMARY KEY,
-  nome VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  senha_hash VARCHAR(255) NOT NULL,
-  criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+CREATE DATABASE IF NOT EXISTS trilhasonora;
 
-CREATE TABLE IF NOT EXISTS respostas (
-  id SERIAL PRIMARY KEY,
-  usuario_id INTEGER REFERENCES usuarios(id) ON DELETE CASCADE,
-  data_participacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  dados JSONB
+USE trilhasonora;
+
+CREATE TABLE IF NOT EXISTS usuario (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
+	senha VARCHAR(255) NOT NULL,
+	dtCadastro DATETIME DEFAULT CURRENT_TIMESTAMP
 );

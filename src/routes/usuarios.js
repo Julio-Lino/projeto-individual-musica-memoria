@@ -1,9 +1,16 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-// Placeholder routes for users - implement real logic later
-router.get('/', function(req, res){
-  res.json({message: 'Rota /usuarios ativa (placeholder)'});
+var usuarioController = require("../controllers/usuarioController");
+
+// recebe os dados do cadastro.html e manda para o controller
+router.post("/cadastrar", function (req, res) {
+    usuarioController.cadastrar(req, res);
+});
+
+// recebe os dados do login.html e manda para o controller
+router.post("/autenticar", function (req, res) {
+    usuarioController.autenticar(req, res);
 });
 
 module.exports = router;

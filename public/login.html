@@ -239,10 +239,35 @@
             div_msg.style.color = '#22c55e';
             div_msg.innerHTML = 'Entrando...';
 
-            // depois, aqui entra a verificação com o banco de dados
-            setTimeout(function () {
-                window.location.href = 'home.html';
-            }, 1000);
+            // envia e-mail e senha para a API (rota /usuarios/autenticar)
+            fetch('/usuarios/autenticar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (json) {
+                        sessionStorage.ID_USUARIO = json.id;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.EMAIL_USUARIO = json.email;
+
+                        setTimeout(function () {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    });
+                } else {
+                    resposta.text().then(function (texto) {
+                        div_msg.style.color = '#f87171';
+                        div_msg.innerHTML = texto;
+                    });
+                }
+            }).catch(function () {
+                div_msg.style.color = '#f87171';
+                div_msg.innerHTML = 'Não foi possível conectar ao servidor.';
+            });
         }
     }
 </script>

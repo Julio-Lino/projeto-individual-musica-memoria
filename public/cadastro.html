@@ -258,12 +258,35 @@
             div_msg.innerHTML = 'As senhas não são iguais.';
         } else {
             div_msg.style.color = '#22c55e';
-            div_msg.innerHTML = 'Conta criada! Indo para o login...';
+            div_msg.innerHTML = 'Criando sua conta...';
 
-            // depois, aqui entra o cadastro no banco de dados
-            setTimeout(function () {
-                window.location.href = 'login.html';
-            }, 1500);
+            // envia os dados para a API (rota /usuarios/cadastrar)
+            fetch('/usuarios/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    div_msg.style.color = '#22c55e';
+                    div_msg.innerHTML = 'Conta criada! Indo para o login...';
+
+                    setTimeout(function () {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                } else {
+                    resposta.text().then(function (texto) {
+                        div_msg.style.color = '#f87171';
+                        div_msg.innerHTML = texto;
+                    });
+                }
+            }).catch(function () {
+                div_msg.style.color = '#f87171';
+                div_msg.innerHTML = 'Não foi possível conectar ao servidor.';
+            });
         }
     }
 </script>

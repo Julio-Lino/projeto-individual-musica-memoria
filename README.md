@@ -315,3 +315,30 @@ Projeto acadêmico de Ciência da Computação (1º semestre).
 ---
 
 <p align="center">Feito com 🎧 e muitas memórias.</p>
+
+---
+
+## API e banco de dados
+
+O back-end (Node + Express + MySQL) é a ponte entre as telas (`public/`) e o banco.
+Fluxo: **tela (fetch) → rota → controller → model → MySQL**.
+
+**Como rodar**
+1. Execute `src/database/script-tabelas.sql` no MySQL Workbench.
+2. Preencha `DB_DATABASE`, `DB_USER` e `DB_PASSWORD` no `.env.dev`.
+3. `npm install` e `npm run dev` → http://localhost:3333
+
+**Tabelas:** `usuario`, `sentimento`, `musica`, `historia`, `comentario`, `curtida`.
+
+**Rotas**
+
+| Rota | O que faz |
+|---|---|
+| `POST /usuarios/cadastrar` · `POST /usuarios/autenticar` | cadastro e login |
+| `GET /sentimentos/listar` | lista os 8 sentimentos |
+| `GET /historias/listar` · `GET /historias/listar/:idUsuario` | histórias do fórum / de um usuário |
+| `POST /historias/publicar/:idUsuario` | publica (musicaServer, artistaServer, idSpotifyServer opcional, relatoServer, idSentimentoServer) |
+| `PUT /historias/editar/:idHistoria` · `DELETE /historias/deletar/:idHistoria/:idUsuario` | só o autor edita/apaga |
+| `GET /comentarios/listar/:idHistoria` · `POST /comentarios/publicar/:idHistoria` · `DELETE /comentarios/deletar/:idComentario/:idUsuario` | comentários |
+| `POST /curtidas/curtir/:idHistoria` · `DELETE /curtidas/descurtir/:idHistoria/:idUsuario` · `GET /curtidas/usuario/:idUsuario` | curtidas |
+| `GET /dashboard/sentimentos` · `/artistas` · `/musicas` · `/meses` · `/mais-curtidas` · `/mais-comentadas` | dados dos gráficos |

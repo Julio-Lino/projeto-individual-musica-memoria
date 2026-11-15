@@ -14,7 +14,7 @@ function sentimentosMaisPublicados() {
 
 function artistasMaisLembrados() {
     var instrucaoSql = `
-        SELECT m.artista, COUNT(h.id) AS total
+        SELECT m.artista, COUNT(h.id) AS total, MAX(m.idSpotify) AS idSpotify
         FROM historia h
         JOIN musica m ON m.id = h.fk_musica
         GROUP BY m.artista

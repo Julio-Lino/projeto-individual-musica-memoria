@@ -342,3 +342,12 @@ Fluxo: **tela (fetch) → rota → controller → model → MySQL**.
 | `GET /comentarios/listar/:idHistoria` · `POST /comentarios/publicar/:idHistoria` · `DELETE /comentarios/deletar/:idComentario/:idUsuario` | comentários |
 | `POST /curtidas/curtir/:idHistoria` · `DELETE /curtidas/descurtir/:idHistoria/:idUsuario` · `GET /curtidas/usuario/:idUsuario` | curtidas |
 | `GET /dashboard/sentimentos` · `/artistas` · `/musicas` · `/meses` · `/mais-curtidas` · `/mais-comentadas` | dados dos gráficos |
+| `GET /spotify/buscar?q=` · `GET /spotify/musicas?ids=` | busca músicas no Spotify (tela de publicar) e devolve capa, artista e foto do artista (Home) |
+
+### Spotify (capas, fotos de artistas e player)
+
+- O servidor fala com a API do Spotify (`src/services/spotifyService.js`); a chave secreta nunca vai para o navegador.
+- No banco guardamos só o `idSpotify` da música (tabela `musica`). Capas e fotos vêm do Spotify na hora de mostrar.
+- Para tocar usamos o player embutido do Spotify (iframe), que não precisa de chave.
+- **Configurar:** crie um app em https://developer.spotify.com/dashboard, copie o Client ID e o Client Secret para `SPOTIFY_CLIENT_ID` e `SPOTIFY_CLIENT_SECRET` no `.env.dev` (e no `.env`) e reinicie o servidor. Precisa de Node 18 ou mais novo.
+- **Telas:** `publicar.html` (busca a música no Spotify e publica a história) e a Home (`index.html`), que lê tudo do banco.

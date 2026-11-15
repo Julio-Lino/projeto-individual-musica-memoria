@@ -22,6 +22,7 @@ var sentimentosRouter = require("./src/routes/sentimentos");
 var comentariosRouter = require("./src/routes/comentarios");
 var curtidasRouter = require("./src/routes/curtidas");
 var dashboardRouter = require("./src/routes/dashboard");
+var spotifyRouter = require("./src/routes/spotify");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,6 +37,7 @@ app.use("/sentimentos", sentimentosRouter);
 app.use("/comentarios", comentariosRouter);
 app.use("/curtidas", curtidasRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/spotify", spotifyRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

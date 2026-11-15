@@ -796,3 +796,50 @@ main{
     align-items:flex-start;
   }
 }
+
+/* SPOTIFY: botão de tocar nos cards, mensagens vazias e player */
+.cd{
+  display:block;
+  cursor:pointer;
+}
+
+.cd .art{
+  position:relative;
+}
+
+.cd .play{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:var(--green);
+  color:#0b2a14;
+  display:grid;
+  place-items:center;
+}
+
+.cd .play svg{
+  width:14px;
+  height:14px;
+  fill:currentColor;
+}
+
+.vazio{
+  grid-column:1/-1;
+  color:#a3a3a3;
+  font-size:15px;
+  padding:28px;
+  text-align:center;
+}
+
+.feat .player{
+  width:100%;
+  margin-bottom:20px;
+}
+
+.av{
+  background-size:cover;
+  background-position:center;
+}

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar história - TrilhaSonora</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+
+    <style>
+        .pub {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .pub h1 {
+            font-size: 40px;
+            letter-spacing: -1.2px;
+            line-height: 1.1;
+            margin: 0 0 10px;
+        }
+
+        .pub .intro {
+            color: #a3a3a3;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 0 0 28px;
+        }
+
+        .box {
+            padding: 28px;
+        }
+
+        .passo {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 28px 0 12px;
+        }
+
+        .passo:first-child {
+            margin-top: 0;
+        }
+
+        .passo span {
+            color: var(--green);
+            margin-right: 6px;
+        }
+
+        .linha {
+            display: flex;
+            gap: 10px;
+        }
+
+        .campo {
+            width: 100%;
+            background: #121212;
+            border: 1px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 15px;
+            padding: 12px 14px;
+        }
+
+        .campo:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        textarea.campo {
+            min-height: 160px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        .btn-buscar {
+            flex: none;
+            background: var(--green);
+            color: #0b2a14;
+            border: 0;
+            border-radius: 10px;
+            padding: 0 22px;
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn-buscar:hover {
+            background: #2fd06b;
+        }
+
+        .resultado {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            text-align: left;
+            background: #121212;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 8px;
+            color: #fff;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .resultado:hover {
+            border-color: var(--green);
+            background: #1a1a1a;
+        }
+
+        .resultado img,
+        .resultado .sem-capa {
+            width: 52px;
+            height: 52px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex: none;
+            background: #2a2a2a;
+        }
+
+        .resultado b {
+            display: block;
+            font-size: 15px;
+        }
+
+        .resultado small {
+            color: #a3a3a3;
+            font-size: 13px;
+        }
+
+        .escolhida {
+            margin-top: 12px;
+        }
+
+        .escolhida .troca {
+            background: none;
+            border: 0;
+            color: var(--green);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            padding: 0;
+        }
+
+        .dica {
+            color: #a3a3a3;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        #div_msg {
+            font-size: 14px;
+            min-height: 20px;
+            margin: 20px 0 12px;
+        }
+
+        select.campo {
+            appearance: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav">
+            <a href="index.html" class="logo">Trilha<span>Sonora</span></a>
+            <nav>
+                <a href="index.html#historias">Fórum</a>
+                <a href="index.html#sentimentos">Dashboard</a>
+                <a href="publicar.html">Publicar</a>
+                <a href="#" class="btn-out" id="b_usuario"></a>
+                <a href="#" onclick="limparSessao()">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pub">
+        <p class="label">Nova história</p>
+        <h1>Conte a sua <em>história</em>.</h1>
+        <p class="intro">Escolha a música, diga o que ela desperta em você e conte a memória. A capa e o player vêm do Spotify.</p>
+
+        <div class="panel box">
+
+            <p class="passo"><span>1</span>Escolha a música</p>
+            <div class="linha">
+                <input type="text" id="ipt_busca" class="campo" placeholder="Nome da música ou do artista" maxlength="100"
+                    onkeydown="if (event.key == 'Enter') { buscar() }">
+                <button type="button" class="btn-buscar" onclick="buscar()">Buscar</button>
+            </div>
+            <div id="resultados"></div>
+            <div id="escolhida" class="escolhida"></div>
+
+            <p class="passo"><span>2</span>Qual sentimento ela desperta?</p>
+            <select id="sel_sentimento" class="campo">
+                <option value="">Carregando...</option>
+            </select>
+
+            <p class="passo"><span>3</span>Conte a memória</p>
+            <textarea id="ipt_relato" class="campo" maxlength="2000"
+                placeholder="Onde você estava? Com quem? O que sentiu quando essa música tocou?"></textarea>
+            <p class="dica" id="contador">0 / 2000</p>
+
+            <div id="div_msg"></div>
+
+            <button type="button" class="btn g" onclick="publicar()">Publicar história</button>
+        </div>
+    </main>
+
+</body>
+
+<script src="js/sessao.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+    // só entra quem está logado (se não estiver, vai para o login)
+    validarSessao();
+
+    let resultadosBusca = [];
+    let musicaEscolhida = null;
+
+    // ---------- SENTIMENTOS (vêm do banco) ----------
+
+    fetch('/sentimentos/listar')
+        .then(function (resposta) { return resposta.json(); })
+        .then(function (lista) {
+            sel_sentimento.innerHTML = '<option value="">Escolha um sentimento</option>';
+
+            for (let i = 0; i < lista.length; i++) {
+                sel_sentimento.innerHTML += `<option value="${lista[i].id}">${escapar(lista[i].nome)}</option>`;
+            }
+        })
+        .catch(function () {
+            sel_sentimento.innerHTML = '<option value="">Não foi possível carregar</option>';
+        });
+
+    ipt_relato.addEventListener('input', function () {
+        contador.innerHTML = ipt_relato.value.length + ' / 2000';
+    });
+
+    // ---------- BUSCA NO SPOTIFY ----------
+
+    function mostrarMensagem(texto, cor) {
+        div_msg.style.color = cor;
+        div_msg.innerHTML = texto;
+    }
+
+    function buscar() {
+        let texto = ipt_busca.value.trim();
+
+        if (texto.length < 2) {
+            resultados.innerHTML = '<p class="dica">Digite pelo menos 2 letras para buscar.</p>';
+            return;
+        }
+
+        resultados.innerHTML = '<p class="dica">Buscando...</p>';
+
+        fetch('/spotify/buscar?q=' + encodeURIComponent(texto))
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    resposta.json().then(function (lista) {
+                        mostrarResultados(lista);
+                    });
+                } else {
+                    resposta.text().then(function (mensagem) {
+                        resultados.innerHTML = `<p class="dica" style="color: #f87171">${escapar(mensagem)}</p>`;
+                    });
+                }
+            })
+            .catch(function () {
+                resultados.innerHTML = '<p class="dica" style="color: #f87171">Não foi possível conectar ao servidor.</p>';
+            });
+    }
+
+    function mostrarResultados(lista) {
+        resultadosBusca = lista;
+        resultados.innerHTML = '';
+
+        if (lista.length == 0) {
+            resultados.innerHTML = '<p class="dica">Nenhuma música encontrada. Tente outro nome.</p>';
+            return;
+        }
+
+        for (let i = 0; i < lista.length; i++) {
+            let capa = '<div class="sem-capa"></div>';
+
+            if (lista[i].capa) {
+                capa = `<img src="${escapar(lista[i].capa)}" alt="Capa de ${escapar(lista[i].musica)}">`;
+            }
+
+            resultados.innerHTML += `
+                <button type="button" class="resultado" onclick="escolher(${i})">
+                    ${capa}
+                    <div>
+                        <b>${escapar(lista[i].musica)}</b>
+                        <small>${escapar(lista[i].artista)}</small>
+                    </div>
+                </button>`;
+        }
+    }
+
+    function escolher(i) {
+        musicaEscolhida = resultadosBusca[i];
+
+        resultados.innerHTML = '';
+        escolhida.innerHTML = `
+            ${playerSpotify(musicaEscolhida.idSpotify, 152)}
+            <button type="button" class="troca" onclick="trocarMusica()">Trocar música</button>`;
+    }
+
+    function trocarMusica() {
+        musicaEscolhida = null;
+        escolhida.innerHTML = '';
+        ipt_busca.focus();
+    }
+
+    // ---------- PUBLICAR ----------
+
+    function publicar() {
+        let idSentimento = sel_sentimento.value;
+        let relato = ipt_relato.value.trim();
+
+        if (musicaEscolhida == null) {
+            mostrarMensagem('Busque e escolha uma música primeiro.', '#f87171');
+        } else if (idSentimento == '') {
+            mostrarMensagem('Escolha o sentimento que a música desperta.', '#f87171');
+        } else if (relato.length < 10) {
+            mostrarMensagem('Conte um pouco mais da sua memória (mínimo de 10 letras).', '#f87171');
+        } else {
+            mostrarMensagem('Publicando...', '#22c55e');
+
+            fetch('/historias/publicar/' + sessionStorage.ID_USUARIO, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    musicaServer: musicaEscolhida.musica,
+                    artistaServer: musicaEscolhida.artista,
+                    idSpotifyServer: musicaEscolhida.idSpotify,
+                    relatoServer: relato,
+                    idSentimentoServer: idSentimento
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    mostrarMensagem('História publicada! Indo para o fórum...', '#22c55e');
+
+                    setTimeout(function () {
+                        window.location.href = 'index.html#historias';
+                    }, 1200);
+                } else {
+                    resposta.text().then(function (texto) {
+                        mostrarMensagem(escapar(texto), '#f87171');
+                    });
+                }
+            }).catch(function () {
+                mostrarMensagem('Não foi possível conectar ao servidor.', '#f87171');
+            });
+        }
+    }
+
+</script>
+
+</html>

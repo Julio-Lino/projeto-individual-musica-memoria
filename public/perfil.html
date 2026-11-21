@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Além do Som</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="side">
+            <a href="index.html" class="logo">Além do <span>Som</span></a>
+
+            <a href="index.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M3 10.5 12 3l9 7.5V21H3z" /><path d="M9 21v-6h6v6" /></svg>
+                Início
+            </a>
+            <a href="comunidade.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                Comunidade
+            </a>
+            <a href="publicar.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                Publicar
+            </a>
+            <a href="questionario.html" class="item ">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                Questionário
+            </a>
+            <a href="dashboard.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M4 20V10" /><path d="M10 20V4" /><path d="M16 20v-7" /><path d="M22 20H2" /></svg>
+                Dashboard
+            </a>
+            <a href="perfil.html" class="item on">
+                <svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                Perfil
+            </a>
+
+            <div class="quem">
+                <b id="b_usuario"></b>
+                <a href="#" onclick="limparSessao()">Sair</a>
+            </div>
+        </aside>
+
+        <main class="main">
+            <h1>Meu <em>perfil</em></h1>
+            <p class="sub-h1">Os dados da sua conta no Além do Som.</p>
+
+            <div class="card" style="margin-top: 32px">
+                <div class="perfil-topo">
+                    <div class="perfil-foto" id="perfil_foto">?</div>
+                    <div>
+                        <h2 id="perfil_nome"></h2>
+                        <p id="perfil_email"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card lista" style="margin-top: 16px">
+                <h3>Minhas músicas</h3>
+                <p class="sub">As músicas que você publicou na comunidade. Você pode remover quando quiser.</p>
+                <div id="minhas_msg" class="q-msg" style="margin: 0 0 8px"></div>
+                <div id="minhas"><div class="vazio">Carregando...</div></div>
+            </div>
+
+            <div class="card" style="margin-top: 16px">
+                <h3>Atalhos</h3>
+                <p class="sub">O que você quer fazer agora?</p>
+                <div class="atalhos">
+                    <a href="publicar.html" class="btn-q g">Publicar uma história</a>
+                    <a href="questionario.html" class="btn-q">Responder o questionário</a>
+                    <a href="dashboard.html" class="btn-q">Ver minha dashboard</a>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px">
+                <button type="button" class="btn-q" onclick="limparSessao()">Sair da conta</button>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+<script src="js/sessao.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+    // só entra quem está logado (se não estiver, vai para o login)
+    validarSessao();
+
+    // nome e e-mail ficam guardados na sessão desde o login
+    let nome = sessionStorage.NOME_USUARIO || '';
+
+    perfil_foto.innerHTML = escapar(nome.charAt(0).toUpperCase());
+    perfil_nome.innerHTML = escapar(nome);
+    perfil_email.innerHTML = escapar(sessionStorage.EMAIL_USUARIO);
+
+    // ---------- MINHAS MÚSICAS ----------
+
+    let minhasHistorias = [];
+
+    function mostrarAviso(texto, cor) {
+        minhas_msg.style.color = cor;
+        minhas_msg.innerHTML = texto;
+    }
+
+    function carregarMinhas() {
+        fetch('/historias/listar/' + sessionStorage.ID_USUARIO)
+            .then(function (resposta) {
+                if (!resposta.ok) {
+                    throw new Error('erro ao listar');
+                }
+                return resposta.json();
+            })
+            .then(function (lista) {
+                minhasHistorias = lista;
+                // a capa vem do Spotify; se ele falhar, aparece a inicial da música
+                return buscarInfoSpotify(idsSpotifyDe(lista));
+            })
+            .then(function () {
+                desenharMinhas();
+            })
+            .catch(function () {
+                minhas.innerHTML = '<div class="vazio">Não foi possível carregar as suas músicas agora.</div>';
+            });
+    }
+
+    function desenharMinhas() {
+        if (minhasHistorias.length == 0) {
+            minhas.innerHTML = '<div class="vazio">Você ainda não publicou nenhuma música. <a href="publicar.html">Publicar a primeira</a></div>';
+            return;
+        }
+
+        minhas.innerHTML = '';
+
+        for (let i = 0; i < minhasHistorias.length; i++) {
+            let h = minhasHistorias[i];
+            let info = infoMusicas[h.idSpotify];
+            let capa = info && info.capa ? info.capa : '';
+            let fundo = capa != '' ? `background-image: url('${escapar(capa)}')` : '';
+            let inicial = capa == '' ? escapar(h.musica.charAt(0).toUpperCase()) : '';
+
+            minhas.innerHTML += `
+                <div class="it">
+                    <div class="capa" style="${fundo}">${inicial}</div>
+                    <div class="txt">
+                        <b>${escapar(h.musica)}</b>
+                        <small>${escapar(h.artista)} · ${escapar(h.sentimento)} · ${tempoAtras(h.dtPublicacao)}</small>
+                    </div>
+                    <button type="button" class="remover" onclick="remover(${i})">Remover</button>
+                </div>`;
+        }
+    }
+
+    function remover(i) {
+        let h = minhasHistorias[i];
+        let aviso = `Remover "${h.musica}" da sua lista?`;
+
+        if (Number(h.curtidas) > 0 || Number(h.comentarios) > 0) {
+            aviso += ' As curtidas e os comentários dessa história também serão apagados.';
+        }
+
+        if (!confirm(aviso)) {
+            return;
+        }
+
+        fetch('/historias/deletar/' + h.id + '/' + sessionStorage.ID_USUARIO, { method: 'DELETE' })
+            .then(function (resposta) {
+                if (resposta.ok) {
+                    minhasHistorias.splice(i, 1);
+                    desenharMinhas();
+                    mostrarAviso('Música removida.', '#22c55e');
+                } else {
+                    resposta.text().then(function (texto) {
+                        mostrarAviso(escapar(texto), '#f87171');
+                    });
+                }
+            })
+            .catch(function () {
+                mostrarAviso('Não foi possível conectar ao servidor.', '#f87171');
+            });
+    }
+
+    carregarMinhas();
+
+</script>
+
+</html>

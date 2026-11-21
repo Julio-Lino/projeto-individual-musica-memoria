@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidade - Além do Som</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/home.css">
+
+    <style>
+        .com {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 40px 24px 90px;
+        }
+
+        .com h1 {
+            font-size: 44px;
+            letter-spacing: -1.4px;
+            line-height: 1.1;
+            margin: 0 0 12px;
+        }
+
+        .com .intro {
+            color: #a3a3a3;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 0 0 24px;
+        }
+
+        .topo-com {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0 8px;
+        }
+
+        .fl {
+            background: #181818;
+            border: 1px solid #2a2a2a;
+            color: #d4d4d4;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .fl:hover {
+            border-color: #4a4a4a;
+        }
+
+        .fl.on {
+            background: var(--green);
+            border-color: var(--green);
+            color: #0b2a14;
+        }
+
+        .fl small {
+            opacity: 0.7;
+            margin-left: 4px;
+            font-weight: 500;
+        }
+
+        .contagem {
+            color: #a3a3a3;
+            font-size: 13px;
+            margin: 14px 0 18px;
+        }
+
+        .hist {
+            display: flex;
+            gap: 20px;
+            background: #181818;
+            border: 1px solid #262626;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 14px;
+        }
+
+        .hcapa {
+            width: 112px;
+            height: 112px;
+            border-radius: 14px;
+            flex: none;
+            background-size: cover;
+            background-position: center;
+            display: grid;
+            place-items: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 38px;
+            font-weight: 800;
+        }
+
+        .hcorpo {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .htopo {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .htopo h3 {
+            font-size: 20px;
+            letter-spacing: -0.4px;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        .hart {
+            color: #a3a3a3;
+            font-size: 14px;
+            margin: 2px 0 0;
+        }
+
+        .htag {
+            flex: none;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+
+        .hrelato {
+            color: #e5e5e5;
+            font-size: 15px;
+            line-height: 1.65;
+            margin: 14px 0;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+
+        .hrodape {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: #a3a3a3;
+            font-size: 13px;
+        }
+
+        .hrodape .mim {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .hrodape .nums {
+            margin-left: auto;
+        }
+
+        .ouvir {
+            background: none;
+            border: 1px solid #2f3a33;
+            color: #d4d4d4;
+            border-radius: 999px;
+            padding: 7px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .ouvir:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .hplayer {
+            margin-top: 14px;
+        }
+
+        .mais {
+            display: block;
+            margin: 28px auto 0;
+        }
+
+        .aviso {
+            color: #a3a3a3;
+            font-size: 15px;
+            line-height: 1.6;
+            text-align: center;
+            padding: 48px 12px;
+        }
+
+        .aviso a {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        @media (max-width: 640px) {
+            .com h1 {
+                font-size: 34px;
+            }
+
+            .hist {
+                flex-direction: column;
+            }
+
+            .hcapa {
+                width: 100%;
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="nav">
+            <a href="index.html" class="logo">Além do <span>Som</span></a>
+            <nav id="menu"></nav>
+        </div>
+    </header>
+
+    <main class="com">
+        <p class="label">Comunidade</p>
+
+        <div class="topo-com">
+            <div>
+                <h1>Músicas e <em>lembranças</em>.</h1>
+                <p class="intro" id="resumo">Carregando as histórias da comunidade...</p>
+            </div>
+            <a href="cadastro.html" class="btn g" id="cta">Criar conta grátis</a>
+        </div>
+
+        <div class="filtros" id="filtros"></div>
+        <p class="contagem" id="contagem"></p>
+
+        <div id="lista"></div>
+
+        <button type="button" class="btn o mais" id="btn_mais" style="display: none" onclick="carregarMais()">Mostrar mais</button>
+    </main>
+
+</body>
+
+<script src="js/main.js"></script>
+<script>
+
+    // esta página é pública: qualquer pessoa pode ver (o menu muda se estiver logada)
+    montarMenu();
+
+    if (estaLogado()) {
+        cta.innerHTML = 'Publicar minha história';
+        cta.href = 'publicar.html';
+    }
+
+    let nomesSentimentos = ['Saudade', 'Alegria', 'Amor', 'Esperança', 'Nostalgia', 'Conforto', 'Tristeza', 'Energia'];
+    let coresSentimentos = [
+        'var(--c-saudade)',
+        'var(--c-alegria)',
+        'var(--c-amor)',
+        'var(--c-esperanca)',
+        'var(--c-nostalgia)',
+        'var(--c-conforto)',
+        'var(--c-tristeza)',
+        'var(--c-energia)'
+    ];
+
+    let tamanhoDoLote = 12;
+
+    let todas = [];          // todas as histórias que vieram do banco
+    let filtradas = [];      // as que passam pelo filtro de sentimento
+    let renderizados = 0;    // quantas já estão na tela
+    let sentimentoAtual = ''; // '' = todas
+    let versao = 0;          // evita desenhar uma lista antiga se o filtro mudou no meio do caminho
+
+    function corDoSentimento(nome) {
+        let posicao = nomesSentimentos.indexOf(nome);
+        if (posicao == -1) {
+            return 'var(--green)';
+        }
+        return coresSentimentos[posicao];
+    }
+
+    // ---------- CARREGAR ----------
+
+    fetch('/historias/listar')
+        .then(function (resposta) {
+            if (!resposta.ok) {
+                throw new Error('erro ao listar');
+            }
+            return resposta.json();
+        })
+        .then(function (lista) {
+            todas = lista;
+            desenharResumo();
+            desenharFiltros();
+
+            // permite abrir já filtrado: comunidade.html?sentimento=Amor
+            let pedido = new URLSearchParams(window.location.search).get('sentimento');
+            filtrar(nomesSentimentos.indexOf(pedido) != -1 ? pedido : '');
+        })
+        .catch(function () {
+            resumo.innerHTML = 'Não foi possível carregar as histórias agora.';
+        });
+
+    function desenharResumo() {
+        if (todas.length == 0) {
+            resumo.innerHTML = 'Ainda não há histórias publicadas.';
+            return;
+        }
+
+        let pessoas = [];
+        for (let i = 0; i < todas.length; i++) {
+            if (pessoas.indexOf(todas[i].idUsuario) == -1) {
+                pessoas.push(todas[i].idUsuario);
+            }
+        }
+
+        let textoHistorias = todas.length == 1 ? '1 música' : todas.length + ' músicas';
+        let textoPessoas = pessoas.length == 1 ? '1 pessoa' : pessoas.length + ' pessoas';
+
+        resumo.innerHTML = `${textoHistorias} e lembranças de ${textoPessoas}. Escolha um sentimento ou ouça o que cada música guarda.`;
+    }
+
+    function desenharFiltros() {
+        let html = `<button type="button" class="fl" id="fl_todas" onclick="filtrar('')">Todas<small>${todas.length}</small></button>`;
+
+        for (let i = 0; i < nomesSentimentos.length; i++) {
+            let total = 0;
+            for (let j = 0; j < todas.length; j++) {
+                if (todas[j].sentimento == nomesSentimentos[i]) {
+                    total++;
+                }
+            }
+
+            html += `<button type="button" class="fl" id="fl_${i}" onclick="filtrar('${nomesSentimentos[i]}')">${nomesSentimentos[i]}<small>${total}</small></button>`;
+        }
+
+        filtros.innerHTML = html;
+    }
+
+    // ---------- FILTRAR E MOSTRAR ----------
+
+    function filtrar(sentimento) {
+        sentimentoAtual = sentimento;
+        versao++;
+
+        filtradas = [];
+        for (let i = 0; i < todas.length; i++) {
+            if (sentimento == '' || todas[i].sentimento == sentimento) {
+                filtradas.push(todas[i]);
+            }
+        }
+
+        // marca o botão do filtro escolhido
+        document.getElementById('fl_todas').classList.toggle('on', sentimento == '');
+        for (let i = 0; i < nomesSentimentos.length; i++) {
+            document.getElementById('fl_' + i).classList.toggle('on', nomesSentimentos[i] == sentimento);
+        }
+
+        lista.innerHTML = '';
+        renderizados = 0;
+        btn_mais.style.display = 'none';
+
+        if (filtradas.length == 0) {
+            contagem.innerHTML = '';
+
+            if (todas.length == 0) {
+                lista.innerHTML = '<div class="aviso">Ainda não há histórias por aqui. <a href="publicar.html">Seja a primeira pessoa a contar a sua!</a></div>';
+            } else {
+                lista.innerHTML = `<div class="aviso">Ninguém publicou uma música com <b>${escapar(sentimento)}</b> ainda.</div>`;
+            }
+            return;
+        }
+
+        let nomeFiltro = sentimento == '' ? '' : ` com ${escapar(sentimento)}`;
+        contagem.innerHTML = `${filtradas.length == 1 ? '1 música' : filtradas.length + ' músicas'}${nomeFiltro}`;
+
+        carregarMais();
+    }
+
+    // desenha o próximo lote (a capa de cada música vem do Spotify, só dos que vão aparecer)
+    function carregarMais() {
+        let minhaVersao = versao;
+        let lote = filtradas.slice(renderizados, renderizados + tamanhoDoLote);
+        let primeiro = renderizados;
+
+        buscarInfoSpotify(idsSpotifyDe(lote)).then(function () {
+            // o filtro mudou enquanto esperávamos: esse lote já não vale
+            if (minhaVersao != versao) {
+                return;
+            }
+
+            let html = '';
+            for (let j = 0; j < lote.length; j++) {
+                html += cartao(lote[j], primeiro + j);
+            }
+
+            lista.insertAdjacentHTML('beforeend', html);
+            renderizados = primeiro + lote.length;
+            btn_mais.style.display = renderizados < filtradas.length ? 'block' : 'none';
+        });
+    }
+
+    function cartao(h, indice) {
+        let info = infoMusicas[h.idSpotify];
+        let capa = info && info.capa ? info.capa : '';
+        let cor = corDoSentimento(h.sentimento);
+
+        let fundo = `background-color: ${cor}`;
+        let conteudoCapa = '&#9835;';
+
+        if (capa != '') {
+            fundo = `background-image: url('${escapar(capa)}')`;
+            conteudoCapa = '';
+        }
+
+        let autor = escapar(h.autor);
+        if (estaLogado() && String(h.idUsuario) == String(sessionStorage.ID_USUARIO)) {
+            autor = '<span class="mim">Você</span>';
+        }
+
+        let botaoOuvir = '';
+        if (h.idSpotify) {
+            botaoOuvir = `<button type="button" class="ouvir" onclick="alternarPlayer(${indice})">&#9654; Ouvir</button>`;
+        }
+
+        return `
+            <article class="hist">
+                <div class="hcapa" style="${fundo}">${conteudoCapa}</div>
+                <div class="hcorpo">
+                    <div class="htopo">
+                        <div>
+                            <h3>${escapar(h.musica)}</h3>
+                            <p class="hart">${escapar(h.artista)}</p>
+                        </div>
+                        <span class="htag" style="background: ${cor}">${escapar(h.sentimento)}</span>
+                    </div>
+                    <p class="hrelato">${escapar(h.relato)}</p>
+                    <div class="hrodape">
+                        <span>${autor} · ${tempoAtras(h.dtPublicacao)}</span>
+                        ${botaoOuvir}
+                        <span class="nums">&#9829; ${h.curtidas} · &#128172; ${h.comentarios}</span>
+                    </div>
+                    <div class="hplayer" id="player_${indice}"></div>
+                </div>
+            </article>`;
+    }
+
+    // abre/fecha o player do Spotify embutido naquela música
+    function alternarPlayer(indice) {
+        let caixa = document.getElementById('player_' + indice);
+
+        if (caixa.innerHTML == '') {
+            caixa.innerHTML = playerSpotify(filtradas[indice].idSpotify, 152);
+        } else {
+            caixa.innerHTML = '';
+        }
+    }
+
+</script>
+
+</html>

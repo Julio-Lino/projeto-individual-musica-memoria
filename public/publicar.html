@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publicar história - TrilhaSonora</title>
+    <title>Publicar história - Além do Som</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/home.css">
@@ -165,6 +165,19 @@
         select.campo {
             appearance: auto;
         }
+
+        .troca-modo {
+            background: none;
+            border: 0;
+            padding: 0;
+            margin-top: 12px;
+            color: var(--green);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+        }
     </style>
 </head>
 
@@ -172,14 +185,8 @@
 
     <header>
         <div class="nav">
-            <a href="index.html" class="logo">Trilha<span>Sonora</span></a>
-            <nav>
-                <a href="index.html#historias">Fórum</a>
-                <a href="index.html#sentimentos">Dashboard</a>
-                <a href="publicar.html">Publicar</a>
-                <a href="#" class="btn-out" id="b_usuario"></a>
-                <a href="#" onclick="limparSessao()">Sair</a>
-            </nav>
+            <a href="index.html" class="logo">Além do <span>Som</span></a>
+            <nav id="menu"></nav>
         </div>
     </header>
 
@@ -198,6 +205,15 @@
             </div>
             <div id="resultados"></div>
             <div id="escolhida" class="escolhida"></div>
+            <button type="button" class="troca-modo" id="btn_modo" onclick="trocarModo()">Não achou ou o Spotify falhou? Digitar música e artista manualmente</button>
+
+            <div id="area_manual" style="display: none; margin-top: 12px">
+                <div class="linha">
+                    <input type="text" id="ipt_musica_manual" class="campo" placeholder="Nome da música" maxlength="100">
+                    <input type="text" id="ipt_artista_manual" class="campo" placeholder="Artista" maxlength="100">
+                </div>
+                <p class="dica">Sem o Spotify, sua história é publicada sem capa e sem player.</p>
+            </div>
 
             <p class="passo"><span>2</span>Qual sentimento ela desperta?</p>
             <select id="sel_sentimento" class="campo">
@@ -223,9 +239,11 @@
 
     // só entra quem está logado (se não estiver, vai para o login)
     validarSessao();
+    montarMenu();
 
     let resultadosBusca = [];
     let musicaEscolhida = null;
+    let modoManual = false;
 
     // ---------- SENTIMENTOS (vêm do banco) ----------
 
@@ -271,12 +289,12 @@
                     });
                 } else {
                     resposta.text().then(function (mensagem) {
-                        resultados.innerHTML = `<p class="dica" style="color: #f87171">${escapar(mensagem)}</p>`;
+                        resultados.innerHTML = `<p class="dica" style="color: #f87171">${escapar(mensagem)} Você pode digitar a música manualmente.</p>`;
                     });
                 }
             })
             .catch(function () {
-                resultados.innerHTML = '<p class="dica" style="color: #f87171">Não foi possível conectar ao servidor.</p>';
+                resultados.innerHTML = '<p class="dica" style="color: #f87171">Não foi possível conectar ao servidor. Você pode digitar a música manualmente.</p>';
             });
     }
 
@@ -322,14 +340,37 @@
         ipt_busca.focus();
     }
 
+    // alterna entre buscar no Spotify e digitar manualmente
+    function trocarModo() {
+        modoManual = !modoManual;
+
+        let busca = ipt_busca.parentNode;
+        busca.style.display = modoManual ? 'none' : 'flex';
+        resultados.style.display = modoManual ? 'none' : 'block';
+        escolhida.style.display = modoManual ? 'none' : 'block';
+        area_manual.style.display = modoManual ? 'block' : 'none';
+
+        btn_modo.innerHTML = modoManual
+            ? 'Voltar para a busca no Spotify'
+            : 'Não achou ou o Spotify falhou? Digitar música e artista manualmente';
+    }
+
     // ---------- PUBLICAR ----------
 
     function publicar() {
         let idSentimento = sel_sentimento.value;
         let relato = ipt_relato.value.trim();
 
-        if (musicaEscolhida == null) {
-            mostrarMensagem('Busque e escolha uma música primeiro.', '#f87171');
+        // modo manual: usa o que foi digitado (sem idSpotify); modo busca: usa a música escolhida
+        let musica = musicaEscolhida;
+        if (modoManual) {
+            let nomeManual = ipt_musica_manual.value.trim();
+            let artistaManual = ipt_artista_manual.value.trim();
+            musica = (nomeManual != '' && artistaManual != '') ? { musica: nomeManual, artista: artistaManual, idSpotify: null } : null;
+        }
+
+        if (musica == null) {
+            mostrarMensagem(modoManual ? 'Digite o nome da música e o artista.' : 'Busque e escolha uma música primeiro.', '#f87171');
         } else if (idSentimento == '') {
             mostrarMensagem('Escolha o sentimento que a música desperta.', '#f87171');
         } else if (relato.length < 10) {
@@ -341,18 +382,18 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    musicaServer: musicaEscolhida.musica,
-                    artistaServer: musicaEscolhida.artista,
-                    idSpotifyServer: musicaEscolhida.idSpotify,
+                    musicaServer: musica.musica,
+                    artistaServer: musica.artista,
+                    idSpotifyServer: musica.idSpotify,
                     relatoServer: relato,
                     idSentimentoServer: idSentimento
                 })
             }).then(function (resposta) {
                 if (resposta.ok) {
-                    mostrarMensagem('História publicada! Indo para o fórum...', '#22c55e');
+                    mostrarMensagem('História publicada! Indo para a comunidade...', '#22c55e');
 
                     setTimeout(function () {
-                        window.location.href = 'index.html#historias';
+                        window.location.href = 'comunidade.html';
                     }, 1200);
                 } else {
                     resposta.text().then(function (texto) {

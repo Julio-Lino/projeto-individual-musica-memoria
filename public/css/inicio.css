@@ -1,0 +1,417 @@
+/* =====================================================================
+   Além do Som: estilos só da Home (carregado depois do home.css)
+   Ideia: nostalgia moderna, SEM mudar a paleta do site (fundo escuro, verde da
+   marca e cinzas). Mesma fonte do site (Inter), vinil, ondas sonoras sutis e uma
+   carta com a foto em polaroid.
+   ===================================================================== */
+
+:root{
+  --leitura:#bfc5c1;
+}
+
+/* ---------- ABERTURA ---------- */
+.hero{
+  padding:48px 32px 28px;
+  background:linear-gradient(180deg,var(--hero) 0%,rgba(26,74,43,.55) 55%,rgba(18,18,18,0) 100%);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:48px;
+  align-items:center;
+}
+
+.hello{
+  color:var(--green);
+  font-size:16px;
+  font-weight:500;
+  margin:0 0 6px;
+}
+
+.lead{
+  color:#c9d1cb;
+  font-size:20px;
+  line-height:1.65;
+  max-width:600px;
+  margin:26px 0 34px;
+}
+
+.btn{
+  font-size:16px;
+  height:52px;
+  padding:0 30px;
+}
+
+.btn.o{
+  padding:0 30px;
+}
+
+/* vinil girando devagar */
+.vinil{
+  width:min(340px,76vw);
+  margin:0 auto;
+  filter:drop-shadow(0 24px 40px rgba(0,0,0,.5));
+}
+
+.vinil svg{
+  width:100%;
+  height:auto;
+  animation:girar 32s linear infinite;
+}
+
+@keyframes girar{
+  to{
+    transform:rotate(360deg);
+  }
+}
+
+.rotulo-recentes{
+  margin:44px 0 14px;
+  color:var(--green);
+}
+
+.chips{
+  margin-top:0;
+}
+
+.chip{
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.04);
+}
+
+/* ---------- ONDAS SONORAS (divisores) ---------- */
+.divisor{
+  display:block;
+  width:100%;
+  max-width:1120px;
+  height:48px;
+  margin:56px auto 0;
+  padding:0 24px;
+  fill:var(--green);
+  opacity:.22;
+}
+
+.hero + .divisor{
+  margin-top:8px;
+}
+
+/* ---------- SOBRE O PROJETO ---------- */
+.porque{
+  max-width:1100px;
+  margin:72px auto 0;
+}
+
+.porque h2{
+  max-width:820px;
+  font-weight:700;
+  font-size:clamp(32px,4.4vw,44px);
+  line-height:1.15;
+  letter-spacing:-.8px;
+  margin:0 0 32px;
+}
+
+.colunas p{
+  font-size:19px;
+  line-height:1.9;
+  color:var(--leitura);
+  margin:0 0 26px;
+}
+
+.colunas p:first-child::first-letter{
+  float:left;
+  font-size:76px;
+  line-height:.82;
+  padding:8px 12px 0 0;
+  color:var(--green);
+  font-weight:800;
+}
+
+.colunas{
+  column-count:2;
+  column-gap:64px;
+  column-rule:1px solid var(--line);
+  margin:0 0 8px;
+}
+
+.porque blockquote{
+  max-width:820px;
+  margin:0 0 48px;
+  padding:4px 0 4px 28px;
+  border-left:3px solid var(--green);
+  font-size:clamp(23px,3vw,29px);
+  line-height:1.5;
+  color:#f1f1f1;
+}
+
+.achados{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin:44px 0 36px;
+}
+
+.achado{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:22px 20px;
+}
+
+.achado svg{
+  width:24px;
+  height:24px;
+  color:var(--green);
+  margin-bottom:16px;
+}
+
+.achado b{
+  display:block;
+  font-size:17px;
+  margin-bottom:8px;
+}
+
+.achado p{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:#a8a8a8;
+}
+
+.porque .numeros{
+  font-size:15px;
+  color:#a3a3a3;
+  margin:0 0 6px;
+}
+
+.porque .numeros b{
+  color:var(--green);
+  font-size:20px;
+  padding:0 2px;
+}
+
+.porque .assinatura-projeto{
+  font-size:16px;
+  line-height:1.7;
+  color:#8a8a8a;
+  margin:18px 0 0;
+}
+
+/* ---------- SOBRE MIM (carta com foto em polaroid) ---------- */
+.autor{
+  max-width:1000px;
+  margin:64px auto 0;
+}
+
+.carta{
+  display:grid;
+  grid-template-columns:290px 1fr;
+  gap:52px;
+  align-items:start;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:52px 52px 44px;
+  box-shadow:0 30px 60px rgba(0,0,0,.35);
+}
+
+.polaroid{
+  position:relative;
+  margin:6px 0 0;
+  background:#f1f1f1;
+  padding:14px 14px 18px;
+  box-shadow:0 12px 28px rgba(0,0,0,.45);
+  transform:rotate(-2.6deg);
+}
+
+/* pedaço de fita adesiva */
+.polaroid::before{
+  content:"";
+  position:absolute;
+  top:-14px;
+  left:50%;
+  width:96px;
+  height:28px;
+  transform:translateX(-50%) rotate(2deg);
+  background:rgba(34,197,94,.55);
+  box-shadow:0 1px 2px rgba(0,0,0,.2);
+}
+
+.polaroid img,
+.polaroid .monograma{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  display:block;
+  background:#262626;
+}
+
+.polaroid .monograma{
+  place-items:center;
+  font-size:72px;
+  font-weight:700;
+  color:var(--green);
+}
+
+.polaroid figcaption{
+  font-size:16px;
+  font-weight:600;
+  line-height:1;
+  text-align:center;
+  padding-top:14px;
+  color:#2a2a2a;
+}
+
+.carta .texto h2{
+  font-weight:700;
+  font-size:clamp(28px,3.6vw,36px);
+  line-height:1.2;
+  letter-spacing:-.6px;
+  margin:0 0 8px;
+  color:#fff;
+}
+
+.carta .texto .quem{
+  font-size:15px;
+  color:#a3a3a3;
+  margin:0 0 28px;
+}
+
+.carta .texto p{
+  font-size:18px;
+  line-height:1.85;
+  color:var(--leitura);
+  margin:0 0 20px;
+}
+
+.carta .texto .quem{
+  line-height:1.5;
+}
+
+.carta .texto .assinatura{
+  font-size:20px;
+  font-weight:700;
+  line-height:1;
+  color:var(--green);
+  margin:28px 0 0;
+}
+
+/* ---------- CONVITE FINAL ---------- */
+.convite{
+  text-align:center;
+  max-width:640px;
+  margin:96px auto 0;
+  padding-bottom:24px;
+}
+
+.convite h2{
+  font-weight:700;
+  font-size:clamp(30px,4vw,40px);
+  line-height:1.2;
+  letter-spacing:-.6px;
+  margin:0 0 16px;
+}
+
+.convite p{
+  font-size:18px;
+  line-height:1.75;
+  color:var(--leitura);
+  margin:0 0 30px;
+}
+
+/* ---------- RODAPÉ ---------- */
+.rodape{
+  border-top:1px solid #262626;
+  margin-top:72px;
+  padding:34px 24px 44px;
+  text-align:center;
+  color:#8a8a8a;
+  font-size:13px;
+  line-height:1.8;
+}
+
+.rodape p{
+  margin:0;
+}
+
+.rodape b{
+  color:#d4d4d4;
+  font-size:15px;
+}
+
+.rodape span{
+  color:var(--green);
+}
+
+/* ---------- RESPONSIVO ---------- */
+@media(max-width:1000px){
+  .hero-grid{
+    grid-template-columns:1fr;
+    gap:36px;
+  }
+
+  .vinil{
+    width:min(240px,60vw);
+    order:2;
+  }
+
+  .carta{
+    grid-template-columns:1fr;
+    gap:36px;
+    padding:40px 28px 36px;
+  }
+
+  .polaroid{
+    max-width:260px;
+    margin:10px auto 0;
+  }
+
+  .achados{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:560px){
+  .hero{
+    padding:36px 20px 24px;
+  }
+
+  .lead{
+    font-size:18px;
+  }
+
+  .colunas p{
+    font-size:18px;
+    line-height:1.85;
+  }
+
+  .colunas p:first-child::first-letter{
+    font-size:62px;
+  }
+
+  .carta .texto p{
+    font-size:17px;
+  }
+
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+}
+
+@media(max-width:760px){
+  .colunas{
+    column-count:1;
+  }
+}
+
+/* quem prefere menos movimento não vê o vinil girar */
+@media(prefers-reduced-motion:reduce){
+  .vinil svg{
+    animation:none;
+  }
+
+  html{
+    scroll-behavior:auto;
+  }
+}

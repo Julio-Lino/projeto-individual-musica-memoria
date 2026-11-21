@@ -23,6 +23,7 @@ var comentariosRouter = require("./src/routes/comentarios");
 var curtidasRouter = require("./src/routes/curtidas");
 var dashboardRouter = require("./src/routes/dashboard");
 var spotifyRouter = require("./src/routes/spotify");
+var questionarioRouter = require("./src/routes/questionario");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,11 +39,12 @@ app.use("/comentarios", comentariosRouter);
 app.use("/curtidas", curtidasRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/spotify", spotifyRouter);
+app.use("/questionario", questionarioRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
     ========================================
-      TrilhaSonora - toda música guarda uma história
+      Além do Som - toda música guarda uma história
     ========================================
 
     Servidor rodando! Acesse: http://${HOST_APP}:${PORTA_APP}

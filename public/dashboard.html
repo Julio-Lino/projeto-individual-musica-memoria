@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Além do Som</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <aside class="side">
+            <a href="index.html" class="logo">Além do <span>Som</span></a>
+
+            <a href="index.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M3 10.5 12 3l9 7.5V21H3z" /><path d="M9 21v-6h6v6" /></svg>
+                Início
+            </a>
+            <a href="comunidade.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                Comunidade
+            </a>
+            <a href="publicar.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                Publicar
+            </a>
+            <a href="questionario.html" class="item ">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+                Questionário
+            </a>
+            <a href="dashboard.html" class="item on">
+                <svg viewBox="0 0 24 24" class="ico"><path d="M4 20V10" /><path d="M10 20V4" /><path d="M16 20v-7" /><path d="M22 20H2" /></svg>
+                Dashboard
+            </a>
+            <a href="perfil.html" class="item">
+                <svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                Perfil
+            </a>
+
+            <div class="quem">
+                <b id="b_usuario"></b>
+                <a href="#" onclick="limparSessao()">Sair</a>
+            </div>
+        </aside>
+
+        <main class="main">
+            <h1>Minha <em>Dashboard</em></h1>
+            <p class="sub-h1">Descubra o que a música diz sobre você.</p>
+
+            <div class="tabs">
+                <button type="button" class="on" id="btn_pessoal" onclick="trocarAba('pessoal')">Pessoal</button>
+                <button type="button" id="btn_comunidade" onclick="trocarAba('comunidade')">Comunidade</button>
+            </div>
+
+            <!-- ============ ABA PESSOAL ============ -->
+            <section id="aba_pessoal">
+
+                <!-- quem ainda não respondeu o questionário -->
+                <div class="card" id="p_vazio" style="display: none">
+                    <h3>Sua dashboard ainda está vazia</h3>
+                    <p class="sub" style="margin-bottom: 18px">Ela é montada com as suas respostas do questionário. Leva menos de 2 minutos.</p>
+                    <a href="questionario.html" class="btn-q g">Responder o questionário</a>
+                </div>
+
+                <div id="p_conteudo" style="display: none">
+
+                    <div class="topo">
+                        <div class="card destaque">
+                            <p class="label">Seu sentimento principal</p>
+                            <h2 id="p_titulo">—</h2>
+                            <p id="p_frase"></p>
+                        </div>
+
+                        <div class="kpis dentro">
+                            <div class="kpi"><b id="p_humor">—</b><span>a música melhora o seu humor</span></div>
+                            <div class="kpi"><b id="p_percentual">—</b><span>das suas respostas</span></div>
+                            <div class="kpi"><b id="p_pessoas">0</b><span>pessoas sentem o mesmo</span></div>
+                        </div>
+                    </div>
+
+                    <div class="grid2">
+                        <div class="card">
+                            <h3>Minhas emoções</h3>
+                            <p class="sub">Como você se relaciona com a música.</p>
+                            <div class="rosca">
+                                <div class="grafico"><canvas id="rosca_pessoal"></canvas></div>
+                                <div class="legenda" id="legenda_pessoal"></div>
+                            </div>
+                        </div>
+
+                        <div class="card marcou">
+                            <h3>O que marcou a sua vida</h3>
+                            <p class="sub" id="p_data">&nbsp;</p>
+                            <div id="p_marcou"></div>
+                            <a href="questionario.html" class="btn-q" style="margin-top: 14px">Refazer o questionário</a>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 16px">
+                        <h3>Sua conexão com a comunidade</h3>
+                        <p class="sub">Quem sente o mesmo que você.</p>
+                        <div class="comunidade-num" id="p_comunidade_num">—</div>
+                        <div class="comunidade-txt" id="p_comunidade_txt"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ ABA COMUNIDADE ============ -->
+            <section id="aba_comunidade" style="display: none">
+
+                <div id="c_erro"></div>
+
+                <div class="kpis">
+                    <div class="kpi"><b id="c_pessoas">0</b><span>pessoas responderam</span></div>
+                    <div class="kpi"><b id="c_principal" style="font-size: 30px; padding-top: 10px">—</b><span>sentimento predominante</span></div>
+                    <div class="kpi"><b id="c_humor">—</b><span>humor médio com a música</span></div>
+                </div>
+
+                <div class="grid2">
+                    <div class="card">
+                        <h3>Sentimentos da comunidade</h3>
+                        <p class="sub">O sentimento principal de cada pessoa.</p>
+                        <div class="rosca">
+                            <div class="grafico"><canvas id="rosca_comunidade"></canvas></div>
+                            <div class="legenda" id="legenda_comunidade"></div>
+                        </div>
+                    </div>
+
+                    <div class="card lista">
+                        <h3>Artistas mais citados</h3>
+                        <p class="sub">Top 5 da comunidade.</p>
+                        <div id="c_artistas"></div>
+                    </div>
+                </div>
+
+                <div class="card lista" style="margin-top: 16px">
+                    <h3>Músicas mais citadas</h3>
+                    <p class="sub">As músicas que mais marcaram a vida das pessoas.</p>
+                    <div id="c_musicas"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.js"></script>
+<script src="js/sessao.js"></script>
+<script src="js/main.js"></script>
+<script>
+
+    // só entra quem está logado (se não estiver, vai para o login)
+    validarSessao();
+
+    let idUsuario = sessionStorage.ID_USUARIO;
+    let graficos = {};
+    let comunidadeCarregada = false;
+
+    let nomesSentimentos = ['Saudade', 'Alegria', 'Amor', 'Esperança', 'Nostalgia', 'Conforto', 'Tristeza', 'Energia'];
+    let coresSentimentos = ['#bf4045', '#bd6900', '#a32d75', '#248a47', '#325eb5', '#008a8f', '#634585', '#758a00'];
+
+    // o título do topo é só uma regra: vem do sentimento com mais pontos no questionário
+    let adjetivos = {
+        'Saudade': 'O Saudoso',
+        'Alegria': 'O Alegre',
+        'Amor': 'O Apaixonado',
+        'Esperança': 'O Esperançoso',
+        'Nostalgia': 'O Nostálgico',
+        'Conforto': 'O Acolhido',
+        'Tristeza': 'O Melancólico',
+        'Energia': 'O Enérgico'
+    };
+
+    if (typeof Chart != 'undefined') {
+        Chart.defaults.color = '#a3a3a3';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+    }
+
+    // ---------- FUNÇÕES AUXILIARES ----------
+
+    function corDoSentimento(nome) {
+        let posicao = nomesSentimentos.indexOf(nome);
+        if (posicao == -1) {
+            return '#22c55e';
+        }
+        return coresSentimentos[posicao];
+    }
+
+    function pegar(url) {
+        return fetch(url).then(function (resposta) {
+            if (!resposta.ok) {
+                // o servidor manda uma mensagem explicando o problema
+                return resposta.text().then(function (texto) {
+                    let erro = new Error(texto);
+                    erro.doServidor = true;
+                    throw erro;
+                });
+            }
+            return resposta.json();
+        });
+    }
+
+    function textoPessoas(total) {
+        return total == 1 ? '1 pessoa' : total + ' pessoas';
+    }
+
+    function trocarAba(nome) {
+        aba_pessoal.style.display = nome == 'pessoal' ? 'block' : 'none';
+        aba_comunidade.style.display = nome == 'comunidade' ? 'block' : 'none';
+
+        btn_pessoal.classList.toggle('on', nome == 'pessoal');
+        btn_comunidade.classList.toggle('on', nome == 'comunidade');
+
+        // a comunidade só é carregada na primeira vez que a aba é aberta
+        if (nome == 'comunidade' && !comunidadeCarregada) {
+            comunidadeCarregada = true;
+            carregarComunidade();
+        }
+    }
+
+    // rosca de sentimentos + legenda com porcentagem
+    function desenharRosca(chave, idCanvas, legenda, lista) {
+        let itens = [];
+        let soma = 0;
+
+        for (let i = 0; i < lista.length; i++) {
+            if (Number(lista[i].total) > 0) {
+                itens.push(lista[i]);
+                soma += Number(lista[i].total);
+            }
+        }
+
+        if (graficos[chave]) {
+            graficos[chave].destroy();
+            graficos[chave] = null;
+        }
+
+        if (itens.length == 0) {
+            legenda.innerHTML = '<div class="vazio">Ainda sem dados para mostrar.</div>';
+            return;
+        }
+
+        let nomes = [];
+        let totais = [];
+        let cores = [];
+        legenda.innerHTML = '';
+
+        for (let i = 0; i < itens.length; i++) {
+            let porcentagem = Math.round((Number(itens[i].total) / soma) * 100);
+
+            nomes.push(itens[i].sentimento);
+            totais.push(Number(itens[i].total));
+            cores.push(corDoSentimento(itens[i].sentimento));
+
+            legenda.innerHTML += `<div class="l"><i style="background: ${corDoSentimento(itens[i].sentimento)}"></i>${escapar(itens[i].sentimento)}<b>${porcentagem}%</b></div>`;
+        }
+
+        if (typeof Chart == 'undefined') {
+            return;
+        }
+
+        graficos[chave] = new Chart(document.getElementById(idCanvas), {
+            type: 'doughnut',
+            data: {
+                labels: nomes,
+                datasets: [{ data: totais, backgroundColor: cores, borderWidth: 0 }]
+            },
+            options: {
+                cutout: '72%',
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+
+    // ---------- ABA PESSOAL ----------
+
+    function carregarPessoal() {
+        pegar('/dashboard/pessoal/' + idUsuario)
+            .then(function (dados) {
+                desenharPessoal(dados);
+            })
+            .catch(function (erro) {
+                let mensagem = erro.doServidor ? escapar(erro.message) : 'Não foi possível carregar seus dados agora.';
+
+                p_vazio.style.display = 'block';
+                p_vazio.innerHTML = `<div class="vazio">${mensagem}</div>`;
+            });
+    }
+
+    function desenharPessoal(d) {
+        // quem ainda não respondeu vê só o convite para responder
+        if (!d.respondeu) {
+            p_vazio.style.display = 'block';
+            p_conteudo.style.display = 'none';
+            return;
+        }
+
+        p_vazio.style.display = 'none';
+        p_conteudo.style.display = 'block';
+
+        let soma = 0;
+        for (let i = 0; i < d.sentimentos.length; i++) {
+            soma += Number(d.sentimentos[i].total);
+        }
+
+        // topo
+        let principal = d.sentimentos[0];
+
+        p_titulo.innerHTML = adjetivos[principal.sentimento] || escapar(principal.sentimento);
+        p_frase.innerHTML = `${escapar(principal.sentimento)} foi a sua escolha em ${principal.total} de ${soma} respostas.`;
+        p_humor.innerHTML = d.tentativa.humor + '/5';
+        p_percentual.innerHTML = Math.round((Number(principal.total) / soma) * 100) + '%';
+        p_pessoas.innerHTML = d.pessoasIgual;
+
+        // rosca
+        desenharRosca('pessoal', 'rosca_pessoal', legenda_pessoal, d.sentimentos);
+
+        // artista e música que marcaram
+        p_data.innerHTML = 'Respondido em ' + new Date(d.tentativa.dtResposta).toLocaleDateString('pt-BR');
+
+        p_marcou.innerHTML = `
+            <div class="it">
+                <div class="ic">${escapar(d.tentativa.artista.charAt(0).toUpperCase())}</div>
+                <div><small>Artista</small><b>${escapar(d.tentativa.artista)}</b></div>
+            </div>
+            <div class="it">
+                <div class="ic">&#9835;</div>
+                <div><small>Música</small><b>${escapar(d.tentativa.musica)}</b></div>
+            </div>`;
+
+        // comunidade
+        p_comunidade_num.innerHTML = d.pessoasIgual;
+
+        let texto = '';
+        if (d.pessoasIgual == 0) {
+            texto = `Ninguém mais tem <b>${escapar(principal.sentimento)}</b> como sentimento principal ainda.`;
+        } else if (d.pessoasIgual == 1) {
+            texto = `pessoa também tem <b>${escapar(principal.sentimento)}</b> como sentimento principal.`;
+        } else {
+            texto = `pessoas também têm <b>${escapar(principal.sentimento)}</b> como sentimento principal.`;
+        }
+
+        if (d.humorMedio != null && d.pessoas > 1) {
+            texto += `<br><br>Seu humor com a música: ${d.tentativa.humor}/5 · média da comunidade: ${d.humorMedio}/5.`;
+        }
+        p_comunidade_txt.innerHTML = texto;
+    }
+
+    // ---------- ABA COMUNIDADE ----------
+
+    function carregarComunidade() {
+        pegar('/dashboard/comunidade')
+            .then(function (dados) {
+                desenharComunidade(dados);
+            })
+            .catch(function (erro) {
+                let mensagem = erro.doServidor ? escapar(erro.message) : 'Não foi possível carregar os dados da comunidade agora. Troque de aba e volte para tentar de novo.';
+
+                comunidadeCarregada = false;
+                c_erro.innerHTML = `<div class="vazio">${mensagem}</div>`;
+            });
+    }
+
+    function desenharLista(elemento, lista, campo, vazio) {
+        elemento.innerHTML = '';
+
+        if (lista.length == 0) {
+            elemento.innerHTML = `<div class="vazio">${vazio}</div>`;
+        }
+
+        for (let i = 0; i < lista.length; i++) {
+            let nome = lista[i][campo];
+
+            elemento.innerHTML += `
+                <div class="it">
+                    <div class="capa" style="border-radius: 50%; background: ${coresSentimentos[i % coresSentimentos.length]}; color: #fff">${escapar(nome.charAt(0).toUpperCase())}</div>
+                    <div class="txt"><b>${escapar(nome)}</b></div>
+                    <div class="n">${textoPessoas(lista[i].total)}</div>
+                </div>`;
+        }
+    }
+
+    function desenharComunidade(d) {
+        c_erro.innerHTML = '';
+
+        c_pessoas.innerHTML = d.pessoas;
+        c_principal.innerHTML = d.sentimentos.length > 0 ? escapar(d.sentimentos[0].sentimento) : '—';
+        c_humor.innerHTML = d.humorMedio == null ? '—' : d.humorMedio + '/5';
+
+        desenharRosca('comunidade', 'rosca_comunidade', legenda_comunidade, d.sentimentos);
+        desenharLista(c_artistas, d.artistas, 'artista', 'Os artistas citados vão aparecer aqui.');
+        desenharLista(c_musicas, d.musicas, 'musica', 'As músicas citadas vão aparecer aqui.');
+    }
+
+    // ---------- COMEÇAR ----------
+
+    carregarPessoal();
+
+</script>
+
+</html>

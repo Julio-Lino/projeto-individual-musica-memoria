@@ -1,14 +1,21 @@
 var spotifyService = require("../services/spotifyService");
 
 function responderErro(res, erro) {
-    console.log("\nErro ao falar com o Spotify: ", erro.message);
+    // o texto do erro aparece no terminal do servidor para ajudar a descobrir o problema
+    console.log("\nErro ao falar com o Spotify: ", erro.name, erro.message);
 
     if (erro.message == "SPOTIFY_NAO_CONFIGURADO") {
         res.status(503).send("O Spotify ainda não foi configurado no servidor (veja SPOTIFY_CLIENT_ID e SPOTIFY_CLIENT_SECRET no .env).");
     } else if (erro.message == "SPOTIFY_CHAVES_INVALIDAS") {
         res.status(503).send("As chaves do Spotify no .env não foram aceitas.");
+    } else if (erro.message == "SPOTIFY_ERRO_403") {
+        res.status(503).send("O Spotify recusou a consulta (403). Apps novos em modo desenvolvimento podem exigir conta Premium no dono do app.");
+    } else if (erro.message == "SPOTIFY_ERRO_429") {
+        res.status(429).send("O Spotify limitou as consultas. Aguarde um pouco e tente de novo.");
+    } else if (erro.name == "TimeoutError" || erro.name == "AbortError") {
+        res.status(504).send("O Spotify demorou demais para responder. Tente de novo em instantes.");
     } else {
-        res.status(502).send("Não foi possível falar com o Spotify agora. Tente de novo em instantes.");
+        res.status(502).send("O Spotify está fora do ar ou sem conexão agora. Tente de novo em instantes.");
     }
 }
 

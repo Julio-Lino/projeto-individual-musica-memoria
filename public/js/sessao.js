@@ -1,4 +1,4 @@
-// sessão do usuário logado (TrilhaSonora)
+// sessão do usuário logado (Além do Som)
 
 // use nas páginas que só podem ser vistas por quem está logado
 function validarSessao() {

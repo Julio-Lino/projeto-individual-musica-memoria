@@ -7,6 +7,9 @@
 var URL_TOKEN = "https://accounts.spotify.com/api/token";
 var URL_API = "https://api.spotify.com/v1";
 
+// se o Spotify demorar mais que isso, desistimos (o site não pode ficar travado esperando)
+var TEMPO_LIMITE_MS = 5000;
+
 var token = null;
 var tokenExpiraEm = 0;
 
@@ -34,11 +37,18 @@ function obterToken() {
             "Authorization": "Basic " + credenciais,
             "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: "grant_type=client_credentials"
+        body: "grant_type=client_credentials",
+        signal: AbortSignal.timeout(TEMPO_LIMITE_MS)
     })
         .then(function (resposta) {
-            if (!resposta.ok) {
+            if (resposta.status >= 500) {
+                throw new Error("SPOTIFY_ERRO_" + resposta.status);
+            }
+            if (resposta.status == 400 || resposta.status == 401) {
                 throw new Error("SPOTIFY_CHAVES_INVALIDAS");
+            }
+            if (!resposta.ok) {
+                throw new Error("SPOTIFY_ERRO_" + resposta.status);
             }
             return resposta.json();
         })
@@ -54,12 +64,17 @@ function chamar(caminho) {
     return obterToken()
         .then(function (tokenAtual) {
             return fetch(URL_API + caminho, {
-                headers: { "Authorization": "Bearer " + tokenAtual }
+                headers: { "Authorization": "Bearer " + tokenAtual },
+                signal: AbortSignal.timeout(TEMPO_LIMITE_MS)
             });
         })
         .then(function (resposta) {
             if (!resposta.ok) {
-                throw new Error("SPOTIFY_ERRO_" + resposta.status);
+                // mostra no terminal o que o Spotify respondeu, para descobrir o motivo
+                return resposta.text().then(function (corpo) {
+                    console.log("\nO Spotify respondeu " + resposta.status + " em " + caminho + ": " + corpo.slice(0, 200));
+                    throw new Error("SPOTIFY_ERRO_" + resposta.status);
+                });
             }
             return resposta.json();
         });
@@ -142,7 +157,7 @@ function buscarUma(idSpotify) {
         })
         .catch(function (erro) {
             // chaves erradas/ausentes precisam chegar ao controller
-            if (erro.message == "SPOTIFY_NAO_CONFIGURADO" || erro.message == "SPOTIFY_CHAVES_INVALIDAS") {
+            if (erro.message == "SPOTIFY_NAO_CONFIGURADO" || erro.message == "SPOTIFY_CHAVES_INVALIDAS" || erro.message == "SPOTIFY_ERRO_403") {
                 throw erro;
             }
             // uma música que falhou não derruba as outras

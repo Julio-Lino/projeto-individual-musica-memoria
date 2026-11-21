@@ -1,5 +1,7 @@
 var database = require("../database/config");
 
+// ---------- usados pela HOME (vêm das histórias do fórum) ----------
+
 // todos os sentimentos aparecem, mesmo os que ainda têm 0 histórias
 function sentimentosMaisPublicados() {
     var instrucaoSql = `
@@ -24,61 +26,117 @@ function artistasMaisLembrados() {
     return database.executar(instrucaoSql);
 }
 
-function musicasMaisLembradas() {
+// ---------- DASHBOARD (vêm do questionário) ----------
+// Em tudo abaixo conta só a ÚLTIMA tentativa de cada pessoa.
+
+var ultimasTentativas = "(SELECT MAX(id) FROM tentativa GROUP BY fk_usuario)";
+
+// a última tentativa de uma pessoa (ou null se nunca respondeu)
+function ultimaTentativa(idUsuario) {
     var instrucaoSql = `
-        SELECT m.nome AS musica, m.artista, COUNT(h.id) AS total
-        FROM historia h
-        JOIN musica m ON m.id = h.fk_musica
-        GROUP BY m.id, m.nome, m.artista
-        ORDER BY total DESC, m.nome
+        SELECT id, humor, artista, musica, dtResposta
+        FROM tentativa WHERE fk_usuario = ? ORDER BY id DESC LIMIT 1;
+    `;
+    return database.executar(instrucaoSql, [idUsuario]).then(function (linhas) {
+        return linhas.length > 0 ? linhas[0] : null;
+    });
+}
+
+// pontos de cada sentimento em uma tentativa
+// (empate: vence o sentimento que apareceu primeiro nas perguntas)
+function sentimentosDaTentativa(idTentativa) {
+    var instrucaoSql = `
+        SELECT s.nome AS sentimento, COUNT(*) AS total
+        FROM resposta r
+        JOIN alternativa a ON a.id = r.fk_alternativa
+        JOIN pergunta p ON p.id = a.fk_pergunta
+        JOIN sentimento s ON s.id = a.fk_sentimento
+        WHERE r.fk_tentativa = ?
+        GROUP BY s.id, s.nome
+        ORDER BY total DESC, MIN(p.numero), s.nome;
+    `;
+    return database.executar(instrucaoSql, [idTentativa]);
+}
+
+// pontos por sentimento de TODAS as pessoas (última tentativa de cada uma)
+function pontosPorPessoa() {
+    var instrucaoSql = `
+        SELECT t.fk_usuario AS idUsuario, s.nome AS sentimento,
+               COUNT(*) AS total, MIN(p.numero) AS primeira
+        FROM tentativa t
+        JOIN resposta r ON r.fk_tentativa = t.id
+        JOIN alternativa a ON a.id = r.fk_alternativa
+        JOIN pergunta p ON p.id = a.fk_pergunta
+        JOIN sentimento s ON s.id = a.fk_sentimento
+        WHERE t.id IN ${ultimasTentativas}
+        GROUP BY t.fk_usuario, s.id, s.nome;
+    `;
+    return database.executar(instrucaoSql);
+}
+
+function humorDaComunidade() {
+    var instrucaoSql = `
+        SELECT COUNT(*) AS pessoas, ROUND(AVG(humor), 1) AS media
+        FROM tentativa WHERE id IN ${ultimasTentativas};
+    `;
+    return database.executar(instrucaoSql).then(function (linhas) {
+        return linhas[0];
+    });
+}
+
+function artistasCitados() {
+    var instrucaoSql = `
+        SELECT artista, COUNT(*) AS total
+        FROM tentativa WHERE id IN ${ultimasTentativas}
+        GROUP BY artista
+        ORDER BY total DESC, artista
         LIMIT 5;
     `;
     return database.executar(instrucaoSql);
 }
 
-function historiasPorMes() {
+function musicasCitadas() {
     var instrucaoSql = `
-        SELECT DATE_FORMAT(dtPublicacao, '%Y-%m') AS mes, COUNT(*) AS total
-        FROM historia
-        GROUP BY mes
-        ORDER BY mes;
-    `;
-    return database.executar(instrucaoSql);
-}
-
-function historiasMaisCurtidas() {
-    var instrucaoSql = `
-        SELECT h.id, m.nome AS musica, m.artista, u.nome AS autor, COUNT(c.fk_usuario) AS total
-        FROM historia h
-        JOIN musica m ON m.id = h.fk_musica
-        JOIN usuario u ON u.id = h.fk_usuario
-        LEFT JOIN curtida c ON c.fk_historia = h.id
-        GROUP BY h.id, m.nome, m.artista, u.nome
-        ORDER BY total DESC, h.id DESC
+        SELECT musica, COUNT(*) AS total
+        FROM tentativa WHERE id IN ${ultimasTentativas}
+        GROUP BY musica
+        ORDER BY total DESC, musica
         LIMIT 5;
     `;
     return database.executar(instrucaoSql);
 }
 
-function historiasMaisComentadas() {
-    var instrucaoSql = `
-        SELECT h.id, m.nome AS musica, m.artista, u.nome AS autor, COUNT(co.id) AS total
-        FROM historia h
-        JOIN musica m ON m.id = h.fk_musica
-        JOIN usuario u ON u.id = h.fk_usuario
-        LEFT JOIN comentario co ON co.fk_historia = h.id
-        GROUP BY h.id, m.nome, m.artista, u.nome
-        ORDER BY total DESC, h.id DESC
-        LIMIT 5;
-    `;
-    return database.executar(instrucaoSql);
+// descobre o sentimento principal de cada pessoa: { idUsuario: "Nostalgia", ... }
+// (mais pontos; empate: o que apareceu primeiro nas perguntas)
+function principalPorPessoa(linhas) {
+    var melhores = {};
+
+    for (var i = 0; i < linhas.length; i++) {
+        var linha = linhas[i];
+        var atual = melhores[linha.idUsuario];
+        var total = Number(linha.total);
+        var primeira = Number(linha.primeira);
+
+        if (atual == undefined || total > atual.total || (total == atual.total && primeira < atual.primeira)) {
+            melhores[linha.idUsuario] = { sentimento: linha.sentimento, total: total, primeira: primeira };
+        }
+    }
+
+    var principais = {};
+    for (var idUsuario in melhores) {
+        principais[idUsuario] = melhores[idUsuario].sentimento;
+    }
+    return principais;
 }
 
 module.exports = {
     sentimentosMaisPublicados,
     artistasMaisLembrados,
-    musicasMaisLembradas,
-    historiasPorMes,
-    historiasMaisCurtidas,
-    historiasMaisComentadas
+    ultimaTentativa,
+    sentimentosDaTentativa,
+    pontosPorPessoa,
+    humorDaComunidade,
+    artistasCitados,
+    musicasCitadas,
+    principalPorPessoa
 };

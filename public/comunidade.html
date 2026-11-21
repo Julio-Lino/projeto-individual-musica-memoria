@@ -290,8 +290,6 @@
         return coresSentimentos[posicao];
     }
 
-    // ---------- CARREGAR ----------
-
     fetch('/historias/listar')
         .then(function (resposta) {
             if (!resposta.ok) {
@@ -347,8 +345,6 @@
 
         filtros.innerHTML = html;
     }
-
-    // ---------- FILTRAR E MOSTRAR ----------
 
     function filtrar(sentimento) {
         sentimentoAtual = sentimento;

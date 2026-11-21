@@ -57,7 +57,6 @@
                 <button type="button" id="btn_comunidade" onclick="trocarAba('comunidade')">Comunidade</button>
             </div>
 
-            <!-- ============ ABA PESSOAL ============ -->
             <section id="aba_pessoal">
 
                 <!-- quem ainda não respondeu o questionário -->
@@ -110,7 +109,6 @@
                 </div>
             </section>
 
-            <!-- ============ ABA COMUNIDADE ============ -->
             <section id="aba_comunidade" style="display: none">
 
                 <div id="c_erro"></div>
@@ -181,8 +179,6 @@
         Chart.defaults.color = '#a3a3a3';
         Chart.defaults.font.family = "'Inter', sans-serif";
     }
-
-    // ---------- FUNÇÕES AUXILIARES ----------
 
     function corDoSentimento(nome) {
         let posicao = nomesSentimentos.indexOf(nome);
@@ -279,8 +275,6 @@
         });
     }
 
-    // ---------- ABA PESSOAL ----------
-
     function carregarPessoal() {
         pegar('/dashboard/pessoal/' + idUsuario)
             .then(function (dados) {
@@ -353,8 +347,6 @@
         p_comunidade_txt.innerHTML = texto;
     }
 
-    // ---------- ABA COMUNIDADE ----------
-
     function carregarComunidade() {
         pegar('/dashboard/comunidade')
             .then(function (dados) {
@@ -398,8 +390,6 @@
         desenharLista(c_artistas, d.artistas, 'artista', 'Os artistas citados vão aparecer aqui.');
         desenharLista(c_musicas, d.musicas, 'musica', 'As músicas citadas vão aparecer aqui.');
     }
-
-    // ---------- COMEÇAR ----------
 
     carregarPessoal();
 

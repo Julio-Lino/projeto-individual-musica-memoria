@@ -9,7 +9,6 @@ function responderErro(res, erro) {
     res.status(500).send("Houve um erro ao buscar os dados da dashboard.");
 }
 
-// ---------- HOME ----------
 
 function sentimentosMaisPublicados(req, res) {
     dashboardModel.sentimentosMaisPublicados()
@@ -23,7 +22,6 @@ function artistasMaisLembrados(req, res) {
         .catch(function (erro) { responderErro(res, erro); });
 }
 
-// ---------- DASHBOARD: aba COMUNIDADE ----------
 // GET /dashboard/comunidade
 function comunidade(req, res) {
     Promise.all([
@@ -61,7 +59,6 @@ function comunidade(req, res) {
         .catch(function (erro) { responderErro(res, erro); });
 }
 
-// ---------- DASHBOARD: aba PESSOAL ----------
 // GET /dashboard/pessoal/:idUsuario
 function pessoal(req, res) {
     var idUsuario = req.params.idUsuario;

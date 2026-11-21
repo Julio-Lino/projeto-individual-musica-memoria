@@ -245,8 +245,6 @@
     let musicaEscolhida = null;
     let modoManual = false;
 
-    // ---------- SENTIMENTOS (vêm do banco) ----------
-
     fetch('/sentimentos/listar')
         .then(function (resposta) { return resposta.json(); })
         .then(function (lista) {
@@ -263,8 +261,6 @@
     ipt_relato.addEventListener('input', function () {
         contador.innerHTML = ipt_relato.value.length + ' / 2000';
     });
-
-    // ---------- BUSCA NO SPOTIFY ----------
 
     function mostrarMensagem(texto, cor) {
         div_msg.style.color = cor;
@@ -354,8 +350,6 @@
             ? 'Voltar para a busca no Spotify'
             : 'Não achou ou o Spotify falhou? Digitar música e artista manualmente';
     }
-
-    // ---------- PUBLICAR ----------
 
     function publicar() {
         let idSentimento = sel_sentimento.value;

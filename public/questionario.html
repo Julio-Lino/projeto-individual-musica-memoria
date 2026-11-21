@@ -52,7 +52,6 @@
             <h1>Seu <em>questionário</em></h1>
             <p class="sub-h1">Responda e a sua dashboard é montada com as suas respostas.</p>
 
-            <!-- ============ INÍCIO ============ -->
             <div class="card q-box" id="q_inicio" style="margin-top: 32px">
                 <h3>Descubra o que a música diz sobre você</h3>
                 <p class="sub" style="margin-bottom: 8px">São 9 perguntas rápidas: 6 de escolha, 1 sobre o seu humor e 2 para você escrever. Não existe resposta certa ou errada.</p>
@@ -61,7 +60,6 @@
                 <button type="button" class="btn-q g" id="btn_iniciar" disabled onclick="iniciar()">Iniciar questionário</button>
             </div>
 
-            <!-- ============ PERGUNTAS ============ -->
             <div class="card q-box" id="q_jogo" style="display: none; margin-top: 32px">
                 <div class="q-topo"><span id="q_contador"></span></div>
                 <div class="barra"><i id="q_barra"></i></div>
@@ -77,7 +75,6 @@
                 </div>
             </div>
 
-            <!-- ============ FIM ============ -->
             <div class="card q-box" id="q_fim" style="display: none; margin-top: 32px">
                 <div class="q-fim">
                     <h2>Pronto!</h2>
@@ -106,8 +103,6 @@
 
     let rotulosHumor = ['Quase nada', 'Um pouco', 'Mais ou menos', 'Bastante', 'Muito'];
 
-    // ---------- CARREGAR AS PERGUNTAS ----------
-
     fetch('/questionario/perguntas')
         .then(function (resposta) {
             if (!resposta.ok) {
@@ -131,8 +126,6 @@
         .catch(function (erro) {
             q_aviso.innerHTML = erro.doServidor ? escapar(erro.message) : 'Não foi possível carregar as perguntas agora.';
         });
-
-    // ---------- CONTROLE DAS TELAS ----------
 
     function totalPassos() {
         // as perguntas do banco + humor + artista + música
@@ -234,8 +227,6 @@
             mostrarPasso();
         }
     }
-
-    // ---------- ENVIAR PARA A API ----------
 
     function enviar() {
         btn_avancar.disabled = true;

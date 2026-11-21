@@ -3,3 +3,6 @@ node_modules
 package-lock.json
 .DS_Store
 .github
+# Arquivos de variáveis de ambiente (não versionar)
+.env
+.env.dev

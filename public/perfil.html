@@ -160,10 +160,6 @@
         let h = minhasHistorias[i];
         let aviso = `Remover "${h.musica}" da sua lista?`;
 
-        if (Number(h.curtidas) > 0 || Number(h.comentarios) > 0) {
-            aviso += ' As curtidas e os comentários dessa história também serão apagados.';
-        }
-
         if (!confirm(aviso)) {
             return;
         }

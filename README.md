@@ -144,8 +144,8 @@ projeto-individual-musica-memoria/
     │   ├── config.js             # conexão com o MySQL
     │   ├── script-tabelas.sql    # banco completo (apaga o fórum!)
     │   └── script-questionario.sql  # só as tabelas do questionário
-    ├── routes/                   # usuarios, historias, sentimentos, comentarios,
-    │                             # curtidas, spotify, questionario, dashboard
+    ├── routes/                   # usuarios, historias, sentimentos,
+    │                             # spotify, questionario, dashboard
     ├── controllers/
     ├── models/
     └── services/
@@ -156,17 +156,13 @@ projeto-individual-musica-memoria/
 
 ## 🗄️ Banco de dados
 
-O banco se chama `trilhasonora` (nome técnico, mantido desde o início) e tem **10 tabelas**, em dois grupos: o **fórum** (histórias) e o **questionário**.
+O banco se chama `trilhasonora` (nome técnico, mantido desde o início) e tem **8 tabelas**, em dois grupos: o **fórum** (histórias) e o **questionário**.
 
 ```mermaid
 erDiagram
     usuario ||--o{ historia : publica
     musica ||--o{ historia : "lembrada em"
     sentimento ||--o{ historia : classifica
-    historia ||--o{ comentario : recebe
-    usuario ||--o{ comentario : escreve
-    usuario ||--o{ curtida : faz
-    historia ||--o{ curtida : recebe
     usuario ||--o{ tentativa : responde
     tentativa ||--|{ resposta : contem
     pergunta ||--|{ alternativa : tem
@@ -180,8 +176,6 @@ erDiagram
 | `sentimento` | Os 8 sentimentos | Já cadastrados pelo script |
 | `musica` | Músicas | Única por nome + artista; `idSpotify` opcional e único |
 | `historia` | A lembrança de uma música | Aponta para usuário, música e sentimento |
-| `comentario` | Comentários nas histórias | Apagado junto com a história ou com o usuário |
-| `curtida` | Curtidas | Chave composta (usuário + história): cada pessoa curte uma vez |
 | `pergunta` | Perguntas do questionário | Ordenadas pelo campo `numero` |
 | `alternativa` | Opções de cada pergunta | Cada uma soma ponto para um sentimento |
 | `tentativa` | Cada vez que alguém responde | Humor (1 a 5), artista e música; vale a última de cada pessoa |
@@ -189,7 +183,7 @@ erDiagram
 
 **Scripts**
 
-- `script-tabelas.sql` cria o banco completo. ⚠️ Ele **apaga e recria** `historia`, `comentario` e `curtida`, além das tabelas do questionário.
+- `script-tabelas.sql` cria o banco completo. ⚠️ Para um banco novo, cria as tabelas do projeto; os comandos de recriação do questionário apagam suas respostas anteriores.
 - `script-questionario.sql` cria **só** as tabelas do questionário, sem mexer no fórum. Use este se o banco já existe com histórias que você quer manter. É necessário que `usuario` e `sentimento` já existam.
 
 ---
@@ -270,22 +264,16 @@ Todas as rotas respondem em JSON. Erros voltam com o status HTTP apropriado e um
 | `POST` | `/usuarios/cadastrar` | `nomeServer`, `emailServer`, `senhaServer` | Cria a conta. E-mail repetido retorna `409`. |
 | `POST` | `/usuarios/autenticar` | `emailServer`, `senhaServer` | Faz o login e devolve `id`, `nome` e `email`. |
 
-### Histórias, sentimentos, comentários e curtidas
+### Histórias e sentimentos
 
 | Método | Rota | Corpo | O que faz |
 |---|---|---|---|
 | `GET` | `/sentimentos/listar` | — | Lista os 8 sentimentos. |
-| `GET` | `/historias/listar` | — | Todas as histórias, com música, sentimento, autor, curtidas e comentários. |
+| `GET` | `/historias/listar` | — | Todas as histórias, com música, sentimento, autor. |
 | `GET` | `/historias/listar/:idUsuario` | — | As histórias de uma pessoa. |
 | `POST` | `/historias/publicar/:idUsuario` | `musicaServer`, `artistaServer`, `idSpotifyServer` (opcional), `relatoServer`, `idSentimentoServer` | Publica. Encontra ou cria a música. |
 | `PUT` | `/historias/editar/:idHistoria` | `idUsuarioServer` e os campos de publicar | Edita (só o autor). |
-| `DELETE` | `/historias/deletar/:idHistoria/:idUsuario` | — | Remove (só o autor). Apaga curtidas e comentários junto. |
-| `GET` | `/comentarios/listar/:idHistoria` | — | Comentários de uma história. |
-| `POST` | `/comentarios/publicar/:idHistoria` | `idUsuarioServer`, `textoServer` | Comenta. |
-| `DELETE` | `/comentarios/deletar/:idComentario/:idUsuario` | — | Apaga o comentário (só o autor). |
-| `POST` | `/curtidas/curtir/:idHistoria` | `idUsuarioServer` | Curte (sem duplicar). |
-| `DELETE` | `/curtidas/descurtir/:idHistoria/:idUsuario` | — | Tira a curtida. |
-| `GET` | `/curtidas/usuario/:idUsuario` | — | Ids das histórias que a pessoa curtiu. |
+| `DELETE` | `/historias/deletar/:idHistoria/:idUsuario` | — | Remove (só o autor). |
 
 ### Spotify
 
@@ -340,7 +328,7 @@ A dashboard usa **apenas dados do próprio banco**: não depende da API do Spoti
 
 - **Consultas parametrizadas** em todo o SQL (`?`), o que evita SQL injection.
 - **Texto escapado na tela:** tudo que vem de usuários passa por `escapar()` antes de entrar no HTML, o que evita XSS.
-- **Só o autor altera ou apaga** as próprias histórias e comentários.
+- **Só o autor altera ou apaga** as próprias histórias.
 - **A chave secreta do Spotify fica só no servidor** e nunca vai para o navegador.
 - A senha **não volta** nas respostas da API.
 - Validação de todos os dados recebidos (campos vazios, tamanhos, notas de 1 a 5, ids válidos).
@@ -421,7 +409,6 @@ Se algum desses arquivos já foi enviado, gere uma chave nova no Spotify e troqu
 - Perfil com remoção de músicas
 
 **📌 Planejado**
-- Botões de **curtir** e **comentar** na Comunidade (a API já existe)
 - **Editar** uma música já publicada (a API já existe)
 - Recuperação de senha
 - Senhas com hash e sessão verificada no servidor
@@ -430,7 +417,6 @@ Se algum desses arquivos já foi enviado, gere uma chave nova no Spotify e troqu
 
 ## ⚠️ Limitações conhecidas
 
-- **Curtidas e comentários** existem na API e no banco, mas ainda não têm botões nas telas, então os números aparecem zerados.
 - **O link "Esqueceu sua senha?"** e a opção **"Manter conectado"** do login ainda não têm função.
 - **O Spotify tem regras próprias:** pode exigir Premium no dono do app e limita as buscas.
 - **A dashboard depende do questionário:** sem respostas, os gráficos ficam vazios.

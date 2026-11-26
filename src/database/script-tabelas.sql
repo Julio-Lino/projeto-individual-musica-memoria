@@ -39,27 +39,6 @@ CREATE TABLE historia (
 	FOREIGN KEY (fk_sentimento) REFERENCES sentimento(id)
 );
 
--- comentários nas histórias (o que faz do site um fórum)
-CREATE TABLE comentario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	texto VARCHAR(500) NOT NULL,
-	dtComentario DATETIME DEFAULT CURRENT_TIMESTAMP,
-	fk_historia INT NOT NULL,
-	fk_usuario INT NOT NULL,
-	FOREIGN KEY (fk_historia) REFERENCES historia(id) ON DELETE CASCADE,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE
-);
-
--- curtidas: cada usuário curte cada história uma única vez (chave composta)
-CREATE TABLE curtida (
-	fk_usuario INT NOT NULL,
-	fk_historia INT NOT NULL,
-	dtCurtida DATETIME DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY (fk_usuario, fk_historia),
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id) ON DELETE CASCADE,
-	FOREIGN KEY (fk_historia) REFERENCES historia(id) ON DELETE CASCADE
-);
-
 INSERT INTO sentimento (nome) VALUES
 	('Saudade'), ('Alegria'), ('Amor'), ('Esperança'),
 	('Nostalgia'), ('Conforto'), ('Tristeza'), ('Energia');
